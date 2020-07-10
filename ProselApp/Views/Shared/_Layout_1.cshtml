@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br" style="font-size: 1rem;">
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" href="~/assets/img/logo-title.png" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/atlantis.min.css">
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/all.min.css" />
+    <style>
+        ul.navbar-nav li.nav-item a.nav-link{
+            font-size: 16px !important;
+        }
+        .fonticon{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar fixed-top navbar-expand-lg navbar-toggleable-lg navbar-dark bg-dark border-bottom box-shadow mb-5 justify-content-between py-1">
+            <div class="container-fluid col-lg-10 col-sm-10">
+                <a class="navbar-brand py-0" href="#tela1" onclick="deslizar(this); return false;">
+                    <img width="100" src="~/assets/img/logo-prin.png" alt="..." class="img-fluid mr-auto mr-md-0 ml-3">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end align-items-center">
+                        <li class="nav-item">
+                            <a onclick="deslizar(this); return false;" class="nav-link text-light font-weight-bold" href="#tela2">Início</a>
+                        </li>
+                        <li class="nav-item">
+                            <a onclick="deslizar(this); return false;" class="nav-link text-light font-weight-bold" href="#tela3">Advogados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a onclick="deslizar(this); return false;" class="nav-link text-light font-weight-bold" href="#tela4">Sobre nós</a>
+                        </li>
+                        <li class="nav-item">
+                            <a onclick="deslizar(this); return false;" class="nav-link text-light font-weight-bold" href="#tela5">Contato</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mr-1 mr-md-2 mr-lg-3 font-weight-bold text-light" asp-controller="User" asp-action="Login"><span class="fa fa-user fonticon"></span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid mt-5">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="bg-dark fixed-bottom">
+        <!-- Footer Text -->
+        <div class="container-fluid text-center text-md-right">
+            <div class="col-md-12 py-3">
+                <div class="mb-12 flex-center">
+                    <a class="text-white mr-md-5 mr-3 h4" asp-area="" asp-controller="suporte" asp-action="terms">
+                        Termos e Privacidade
+                    </a>
+                    <!-- Twitter -->
+                    <a class="text-white mr-md-5 mr-3 h4">
+                        Copyright  &copy;2019 - @DateTime.Now.Year DEV4
+                    </a>
+                </div>
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- Footer Text -->
+    </footer>
+    <!-- Footer -->
+    <script src="~/assets/temp/atlantis/js/core/jquery-3.5.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/core/popper.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/core/bootstrap.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/chart.js/chart.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/webfont/webfont.min.js"></script>
+    <script src='~/assets/temp/atlantis/js/core/jquery.mask.js'></script>
+    <script src="~/assets/temp/atlantis/js/odontoapp/app/app_scripts.js"></script>
+    <script>
+        WebFont.load({
+            google: { "families": ["Lato:300,400,700,900"] },
+            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/temp/atlantis/css/fonts.min.css'] },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <script>
+        function deslizar(element) {
+            let id = element.getAttribute('href'),
+                targetOffset = $(id).offset().top,
+                menuHeight = $('nav').innerHeight();
+            $('html, body').animate({
+                scrollTop: targetOffset - menuHeight
+            }, 500);
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MSG_E001" xml:space="preserve">
+    <value>O campo {0} é obrigatório!</value>
+  </data>
+  <data name="MSG_E002" xml:space="preserve">
+    <value>O campo {0} deve ter no mínimo {1} caracteres!</value>
+  </data>
+  <data name="MSG_E003" xml:space="preserve">
+    <value>O campo {0} deve ter no máximo {1} caracteres!</value>
+  </data>
+  <data name="MSG_E004" xml:space="preserve">
+    <value>O campo {0} não é válido!</value>
+  </data>
+  <data name="MSG_E005" xml:space="preserve">
+    <value>O valor do campo {0} não confere com o valor do campo {1}!</value>
+  </data>
+  <data name="MSG_E006" xml:space="preserve">
+    <value>O valor do campo {0} não se encontra entre {1} e {2}!</value>
+  </data>
+  <data name="MSG_E007" xml:space="preserve">
+    <value>Usuário não encontrado, verifique o e-mail e senha digitado!</value>
+  </data>
+  <data name="MSG_E008" xml:space="preserve">
+    <value>Quantidade de produto solicitada é maior do que o nosso estoque deste produto!</value>
+  </data>
+  <data name="MSG_E009" xml:space="preserve">
+    <value>Não foi selecionado o tipo de envio!</value>
+  </data>
+  <data name="MSG_E011" xml:space="preserve">
+    <value>Código não gerado, aguarde {0} min antes de pedir um novo código!</value>
+  </data>
+  <data name="MSG_E012" xml:space="preserve">
+    <value>Os dados do cartão estão incorretos ou esse cartão está inativo, por favor, tente novamente!</value>
+  </data>
+  <data name="MSG_E013" xml:space="preserve">
+    <value>Não foi possível completar sua solicitação, se o problema persistir entre em contato conosco.</value>
+  </data>
+  <data name="MSG_E014" xml:space="preserve">
+    <value>E-mail não encontrado na base de dados!</value>
+  </data>
+  <data name="MSG_E015" xml:space="preserve">
+    <value>Código de Verificação Inválido, verifique sua caixa de e-mail e tenha certeza de que este é o código mais recente</value>
+  </data>
+  <data name="MSG_S001" xml:space="preserve">
+    <value>Registro salvo com sucesso!</value>
+  </data>
+  <data name="MSG_S002" xml:space="preserve">
+    <value>Registro excluído com sucesso!</value>
+  </data>
+  <data name="MSG_S003" xml:space="preserve">
+    <value>Código de recuperação enviado para o email informado com sucesso! O código gerado possui 24horas de validade</value>
+  </data>
+  <data name="MSG_S004" xml:space="preserve">
+    <value>E-mail enviado para sua caixa postal!</value>
+  </data>
+  <data name="MSG_S005" xml:space="preserve">
+    <value>Senha alterada com sucesso!</value>
+  </data>
+  <data name="MSG_S006" xml:space="preserve">
+    <value>Cadastro realizado com sucesso!</value>
+  </data>
+  <data name="MSG_S007" xml:space="preserve">
+    <value>Novo código de verificação gerado com sucesso! Verifique sua caixa de e-mail! O código gerado possui 24horas de validade</value>
+  </data>
+  <data name="MSG_S008" xml:space="preserve">
+    <value>Conta Ativada com Sucesso</value>
+  </data>
+</root>

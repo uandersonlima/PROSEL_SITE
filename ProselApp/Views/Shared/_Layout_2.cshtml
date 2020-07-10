@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br" style="font-size:1rem">
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" href="~/assets/img/logo-title.png" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/all.min.css" />
+    <!-- Bootstrap core CSS -->
+    <link href="~/assets/temp/mdb/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="~/assets/temp/mdb/css/mdb.min.css" rel="stylesheet" />
+    <!-- Your custom styles (optional) -->
+    <link href="~/assets/temp/mdb/css/style.css" rel="stylesheet" />
+    <style>
+        .bg{
+            width: auto;
+            height: auto;
+            background-image: url("assets/img/bg-adv.jpg");
+            background-size:cover;            
+        }
+    </style>
+</head>
+<body class="bg">
+    <div>
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="text-muted">
+        <!-- Footer Text -->
+        <div class="container-fluid text-center text-md-right">
+            <div class="col-md-12">
+                <div class="mb-12 flex-center">
+                    <a class=" font-weight-bold text-white mr-md-5 mr-3 h6" asp-area="" asp-controller="suporte" asp-action="terms">
+                        Termos e Privacidade
+                    </a>
+                    <!-- Twitter -->
+                    <a class=" font-weight-bold text-white mr-md-5 mr-3 h6">
+                        Copyright  &copy;2019 - @DateTime.Now.Year DEV4
+                    </a>
+                </div>
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- Footer Text -->
+    </footer>
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script src="~/assets/temp/atlantis/js/core/jquery-3.5.1.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/temp/mdb/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/assets/temp/mdb/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script src="~/assets/temp/mdb/js/mdb.min.js"></script>
+    <script src='~/assets/temp/atlantis/js/core/jquery.mask.js'></script>
+    <script src="~/assets/temp/atlantis/js/odontoapp/app/app_scripts.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
