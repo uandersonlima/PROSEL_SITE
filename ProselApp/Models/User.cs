@@ -12,6 +12,7 @@ namespace ProselApp.Models
         [CPF(ErrorMessage = "Informe um {0} válido")]
         [Required(ErrorMessage = "Informe o campo {0}", AllowEmptyStrings = false)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:#########'/'##}")]
+        [CPFUnico]
         public string Cpf { get; set; }
         
         [Required(ErrorMessage = "Informe o campo {0}", AllowEmptyStrings = false)]
@@ -26,7 +27,7 @@ namespace ProselApp.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe o campo {0}", AllowEmptyStrings = false)]
-        [MinLength(14, ErrorMessage = "Senha deve conter no mínimo 6 caracteres")]
+        [MinLength(14, ErrorMessage = "Informe DDD e número")]
         public string Telephone { get; set; }
 
         [Required(ErrorMessage = "Informe o campo {0}", AllowEmptyStrings = false)]
@@ -37,11 +38,11 @@ namespace ProselApp.Models
         [NotMapped]
         [Required(ErrorMessage = "Informe o campo {0}", AllowEmptyStrings = false)]
         [Display(Name = "Confirme a senha")]
-        [Compare("Senha", ErrorMessage = "Senhas diferentes")]
+        [Compare("Password", ErrorMessage = "Senhas diferentes")]
         [DataType(DataType.Password)]
         public string PasswordConfirmation { get; set; }
         public bool AccountStatus { get; set; }
-        public bool receive_emails { get; set; }
+        public bool Receive_emails { get; set; }
         public string AccessType { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
     }

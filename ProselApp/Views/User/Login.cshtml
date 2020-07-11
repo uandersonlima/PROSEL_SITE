@@ -5,20 +5,20 @@
 }
 <div class="container-fluid text-center">
     <div class="row justify-content-center align-items-center vh-100">
-        <div class="card col-12 col-md-6 col-lg-4 py-md-0 grey-bg">
+        <div class="card col-12 col-md-6 col-lg-4 py-md-0 elegant-color">
             <div class="card-body">
                 <form method="post">
                     <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
-                        <img class="d-block mx-auto mb-4" src="~/assets/img/logo-prin2.png" alt="" width="150">
+                        <img class="d-block mx-auto mb-4" src="~/assets/img/logo-prin.png" alt="" width="150">
                     </a>
-                    <h1 class="h3 mb-3 font-weight-normal  yellow-text">Fazer login</h1>
+                    <h1 class="h3 mb-3 font-weight-bold yellow-text">LOGIN</h1>
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
                     <div class="row">
                         <div class="col-md-12">
                             <div class="md-form text-left">
                                 <i class="fa fa-user prefix yellow-text"></i>
-                                <input asp-for="Email" id="email" class="form-control" type="email">
-                                <label for="email" class="font-weight-light">Seu email</label>
+                                <input asp-for="Email" id="email" class="form-control yellow-text" type="email">
+                                <label for="email" class="font-weight-light yellow-text">Seu email</label>
                                 <span asp-validation-for="Email" class="ml-5 d-flex text-danger"></span>
                             </div>
                         </div>
@@ -29,8 +29,8 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-lock prefix yellow-text"></i>
-                                        <input asp-for="Password" id="senha" class="form-control" type="password">
-                                        <label for="Password" class="font-weight-light">Sua Senha</label>
+                                        <input asp-for="Password" id="Password" class="form-control yellow-text" type="password">
+                                        <label for="Password" class="font-weight-light yellow-text">Sua Senha</label>
                                         <span asp-validation-for="Password" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                             <a asp-action="CadastroUsuario" asp-controller="User" class="font-weight-bold yellow-text">Criar conta</a>
                         </div>
                         <div class="col-md-6 col-12 ml-auto">
-                            <button type="submit" class="btn btn-lg btn-warning btn-block text-capitalize"> Acessar </button>
+                            <button type="submit" class="btn btn-lg btn-warning btn-block text-dark text-capitalize font-weight-bold"> Acessar </button>
                         </div>
                     </div>
                 </form>

@@ -51,7 +51,7 @@ namespace ProselApp.Controllers
             if (!(userDB is null))
             {
                 loginSvc.Login(userDB);
-                return RedirectToAction("Index", "Agendas");
+                return RedirectToAction("Index", "Message");
             }
             else
             {
@@ -59,6 +59,7 @@ namespace ProselApp.Controllers
                 return View();
             }
         }
+
         [HttpGet, Route("Perfil")]
         public async Task<IActionResult> MyProfile()
         {

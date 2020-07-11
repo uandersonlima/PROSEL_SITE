@@ -1,6 +1,11 @@
 @inject ILoginService loginSvc
 @{ 
-    var usuarioNome = loginSvc.GetUser().Name;
+    string usuarioNome = string.Empty;
+    if(loginSvc.GetUser() != null)
+        usuarioNome = loginSvc.GetUser().Name;
+    else
+        usuarioNome = "Uanderson Lima";
+
 }
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -25,10 +30,10 @@
         });
     </script>
     <!-- CSS Files -->
-    <link rel="stylesheet" href="~/agenda/css/bootstrap.min.css">
-    <link rel="stylesheet" href="~/assets/css/atlantis.css">
-    <link rel="stylesheet" href="~/assets/css/all.min.css" />
-    <link rel="stylesheet" href="~/assets/css/style.css"/>
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/atlantis.css">
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/all.min.css" />
+    <link rel="stylesheet" href="~/assets/temp/atlantis/css/style.css"/>
 </head>
 <body>
     <div class="wrapper sidebar_minimize">
@@ -213,7 +218,7 @@
             <div class="content">
                 @RenderBody()
             </div>
-            <footer class="footer text-primary">
+            <footer class="footer text-warning">
                 <!-- Footer Text -->
                 <div class="container-fluid text-center text-md-right">
                     <div class="col-md-12">
@@ -223,7 +228,7 @@
                             </a>
                             <!-- Twitter -->
                             <a class=" font-weight-bold mr-md-5 mr-3">
-                                Copyright  &copy;2019 - @DateTime.Now.Year DEV4
+                                Copyright  &copy; @DateTime.Now.Year PROSEL
                             </a>
                         </div>
                     </div>
@@ -235,45 +240,45 @@
     </div>
 
     <!--   Core JS Files   -->
-    <script src="~/assets/js/core/jquery-3.5.1.min.js"></script>
-    <script src="~/assets/js/core/popper.min.js"></script>
-    <script src="~/agenda/js/bootstrap.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/core/jquery-3.5.1.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/core/popper.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery UI -->
-    <script src="~/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-    <script src="~/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="~/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
 
     <!-- Chart JS -->
-    <script src="~/assets/js/plugin/chart.js/chart.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/chart.js/chart.min.js"></script>
 
     <!-- jQuery Sparkline -->
-    <script src="~/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
     <!-- Chart Circle -->
-    <script src="~/assets/js/plugin/chart-circle/circles.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/chart-circle/circles.min.js"></script>
 
     <!-- Datatables -->
-    <script src="~/assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <script src="~/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <!-- jQuery Vector Maps -->
-    <script src="~/assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-    <script src="~/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
 
     <!-- Sweet Alert -->
-    <script src="~/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+    <script src="~/assets/temp/atlantis/js/plugin/sweetalert/sweetalert.min.js"></script>
 
     <!-- Atlantis JS -->
-    <script src="~/assets/js/atlantis.js"></script>
+    <script src="~/assets/temp/atlantis/js/atlantis.js"></script>
 
-    <script src='~/assets/js/core/jquery.mask.js'></script>
-    <script src="~/assets/js/odontoapp/app/app_scripts.js"></script>
+    <script src='~/assets/temp/atlantis/js/core/jquery.mask.js'></script>
+    <script src="~/assets/temp/atlantis/js/odontoapp/app/app_scripts.js"></script>
     <script>
         $(document).ready(function () {
             var url = window.location

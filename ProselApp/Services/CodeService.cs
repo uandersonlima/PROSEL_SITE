@@ -38,7 +38,7 @@ namespace ProselApp.Services
             AccessCode newCode = new AccessCode
             {
                 Key = Key,
-                User = new User{ Email= entity.Email},
+                User = entity,
                 CodeType = codeType,
                 GenDate = DateTime.Now
             };

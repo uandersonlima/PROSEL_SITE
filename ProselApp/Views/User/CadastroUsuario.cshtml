@@ -3,25 +3,32 @@
     ViewData["Title"] = "Cadastra-se";
     Layout = "~/Views/Shared/_Layout_2.cshtml";
 }
+<style>
+  .custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: yellow;
+  background-color: yellow;
+}
+</style>
 <form method="post">
     <div class="container-fluid">
         <div class="row justify-content-center align-items-center vh-100">
-            <div class="card col-12 col-md-6 col-lg-4 text-center d-flex" id="pag1">
+            <div class="card col-12 col-md-6 col-lg-4 text-center d-flex elegant-color" id="pag1">
                 <div class="card-body">
                     <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
-                        <img class="d-block mx-auto mb-4" src="~/assets/img/logo-prin2.png" alt="" width="150">
+                        <img class="d-block mx-auto mb-4" src="~/assets/img/logo-prin.png" alt="" width="150">
                     </a>
-                    <h1 class="text-muted">CADASTRO</h1>
-                    <p class="text-muted">Vamos iniciar sua experiência</p>
+                    <h1 class="yellow-text font-weight-bold">CADASTRO</h1>
+                    <p class="yellow-text">Vamos iniciar sua experiência</p>
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-row">
                                 <div class="col">
                                     <div class="md-form text-left">
-                                        <i class="fa fa-id-card prefix grey-text"></i>
-                                        <input type="text" asp-for="Name" id="Name" class="form-control">
-                                        <label asp-for="Name" for="Name">Seu nome</label>
+                                        <i class="fa fa-id-card prefix yellow-text"></i>
+                                        <input type="text" asp-for="Name" id="Name" class="form-control yellow-text">
+                                        <label asp-for="Name" for="Name" class="yellow-text">Seu nome</label>
                                         <span asp-validation-for="Name" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
@@ -33,9 +40,9 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="md-form text-left">
-                                        <i class="fa fa-envelope prefix grey-text"></i>
-                                        <input asp-for="Email" id="email" class="form-control" type="email">
-                                        <label for="email" class="font-weight-light">Seu email</label>
+                                        <i class="fa fa-envelope prefix yellow-text"></i>
+                                        <input asp-for="Email" id="email" class="form-control yellow-text" type="email">
+                                        <label for="email" class="font-weight-light yellow-text">Seu email</label>
                                         <span asp-validation-for="Email" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
@@ -47,9 +54,9 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="md-form text-left">
-                                        <i class="fa fa-lock prefix grey-text"></i>
-                                        <input asp-for="Password" id="Password" class="form-control" type="password">
-                                        <label for="Password" class="font-weight-light">Sua Senha</label>
+                                        <i class="fa fa-lock prefix yellow-text"></i>
+                                        <input asp-for="Password" id="Password" class="form-control yellow-text" type="password">
+                                        <label for="Password" class="font-weight-light yellow-text">Sua Senha</label>
                                         <span asp-validation-for="Password" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
@@ -61,9 +68,9 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="md-form text-left">
-                                        <i class="fa fa-key prefix grey-text"></i>
-                                        <input class="form-control" asp-for="PasswordConfirmation" type="password">
-                                        <label asp-for="PasswordConfirmation">Confirme sua senha</label>
+                                        <i class="fa fa-key prefix yellow-text"></i>
+                                        <input class="form-control yellow-text" asp-for="PasswordConfirmation" type="password">
+                                        <label asp-for="PasswordConfirmation" class="font-weight-light yellow-text">Confirme sua senha</label>
                                         <span asp-validation-for="PasswordConfirmation" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
@@ -72,42 +79,68 @@
                     </div>
                     <div class="form-row mt-5">
                         <div class="col-md-6 mt-4 mt-md-0 col-12 order-1 order-md-0 ml-auto align-self-center">
-                            <a asp-action="Login" asp-controller="User" class="font-weight-bold">Ir para o Login</a>
+                            <a asp-action="Login" asp-controller="User" class="font-weight-bold yellow-text">Ir para o Login</a>
                         </div>
                         <div class="col-md-6 col-12 ml-auto">
-                            <button onclick="mudarPagina(this,'pag1','pag2')" id="pag2" type="button" class="btn btn-lg btn-primary btn-block text-capitalize"> Próximo </button>
+                            <button onclick="mudarPagina(this,'pag1','pag2')" id="pag2" type="button" class="btn btn-lg btn-warning btn-block text-dark font-weight-bold text-capitalize"> Próximo </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="card col-12 col-md-6 col-lg-4 text-center d-none" id="pag2">
+            <div class="card col-12 col-md-6 col-lg-4 text-center d-none elegant-color" id="pag2">
                 <div class="card-body">
                     <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
-                        <img class="d-block mx-auto mb-4"  src="~/assets/img/logo-prin2.png"  alt="" width="150">
+                        <img class="d-block mx-auto mb-4"  src="~/assets/img/logo-prin.png"  alt="" width="150">
                     </a>
-                    <h1 class="text-muted">CADASTRO</h1>
-                    <p class="text-muted">Vamos iniciar sua experiência</p>
+                    <h1 class="yellow-text font-weight-bold">CADASTRO</h1>
+                    <p class="yellow-text">Vamos iniciar sua experiência</p>
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-row">
                                 <div class="col">
                                     <div class="md-form text-left">
-                                        <i class="fa fa-fingerprint prefix grey-text"></i>
-                                        <input asp-for="Cpf" id="cpf" class="form-control cpf">
-                                        <label asp-for="Cpf" for="cpf">Seu CPF</label>
+                                        <i class="fa fa-fingerprint prefix yellow-text"></i>
+                                        <input asp-for="Cpf" id="cpf" class="form-control cpf yellow-text">
+                                        <label asp-for="Cpf" for="cpf" class="yellow-text">Seu CPF</label>
                                         <span asp-validation-for="Cpf" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="md-form text-left">
+                                        <i class="fa fa-phone-square prefix yellow-text"></i>
+                                        <input asp-for="Telephone" id="Telephone" class="form-control tel yellow-text">
+                                        <label asp-for="Telephone" for="Telephone" class="yellow-text">Seu telefone</label>
+                                        <span asp-validation-for="Telephone" class="ml-5 d-flex text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-row">
+                                <div class="col">
+                                    <div class="custom-control custom-switch">
+                                        <input asp-for="Receive_emails" type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
+                                        <label class="custom-control-label yellow-text" for="customSwitches">Deseja saber quem te procurou atráves do seu email?</label>
+                                    </div>
+                                </div>      
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-row mt-5">
                         <div class="col-md-6 mt-4 mt-md-0 col-12 order-1 order-md-0 ml-auto align-self-center">
-                            <a href="#" onclick="mudarPagina(this, 'pag2','pag1')" id="pag1" class="font-weight-bold">Anterior</a>
+                            <a href="javascript:void(0)" onclick="mudarPagina(this, 'pag2','pag1')" id="pag1" class="font-weight-bold yellow-text">Anterior</a>
                         </div>
                         <div class="col-md-6 col-12 ml-auto">
-                            <input value="Finalizar" onclick="mudarPagina(this, 'pag2','pag3')" id="pag3" type="submit" class="btn btn-lg btn-primary btn-block text-capitalize"/>
+                            <button onclick="mudarPagina(this, 'pag2','pag3')" id="pag3" type="submit" class="btn btn-lg btn-warning btn-block text-dark font-weight-bold text-capitalize">Finalizar</button>
                         </div>
                     </div>
                 </div>

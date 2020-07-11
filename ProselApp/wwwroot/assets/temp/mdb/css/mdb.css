@@ -1005,11 +1005,11 @@
 }
 
 .yellow {
-    background-color: #ffeb3b !important
+    background-color:#fff159!important
 }
 
 .yellow-text {
-    color: #ffeb3b !important
+    color :#fff159 !important
 }
 
 .rgba-yellow-slight,
@@ -6447,7 +6447,7 @@ table.table a.btn.btn-danger {
 
 .btn-warning {
     color: #fff;
-    background-color: #fb3 !important
+    background-color: #fff159 !important
 }
 
 .btn-warning:hover {
@@ -10708,9 +10708,9 @@ body.scrollable {
 .md-form input[type="phone"]:not(.browser-default):focus:not([readonly]),
 .md-form input[type="search-md"]:focus:not([readonly]),
 .md-form textarea.md-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #4285f4;
-    -webkit-box-shadow: 0 1px 0 0 #4285f4;
-    box-shadow: 0 1px 0 0 #4285f4
+    border-bottom: 1px solid #fff159;
+    -webkit-box-shadow: 0 1px 0 0 #fff159;
+    box-shadow: 0 1px 0 0 #fff159
 }
 
 .md-form input:not([type]):focus:not([readonly])+label,
