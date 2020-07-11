@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ProselApp.Libraries.Lang;
 
 namespace ProselApp.Models.AcessCode
 {
@@ -7,9 +9,11 @@ namespace ProselApp.Models.AcessCode
     {
         [Key]
         public int Code { get; set; }
+        [ForeignKey("User")]
         public string UserCpf { get; set; }
         public virtual User User { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E001")]
+
+        [Required(ErrorMessageResourceType = typeof(MSG), ErrorMessageResourceName = "MSG_E001")]
         [Display(Name = "Código de Verificação")]
         public string Key { get; set; }
         public string CodeType { get; set; }

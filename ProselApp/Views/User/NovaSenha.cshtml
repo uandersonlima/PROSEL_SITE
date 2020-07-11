@@ -1,0 +1,52 @@
+@model UserCode
+@{
+    ViewData["Title"] = "Alterar senha";
+    Layout = "~/Views/Shared/_Layout_2.cshtml";
+}
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center vh-100">
+        <div class="card col-12 col-md-6 col-lg-4 elegant-color">
+            <div class="card-body">
+                <form method="post">
+                    <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
+                        <img class="d-block mx-auto mb-4" src="~/assets/img/Logo-prin.png" alt="" width="150">
+                    </a>
+                    <h4 class="card-title mb-4 mt-1 text-center font-weight-bold text-uppercase yellow-text">Recuperação de conta</h4>
+                    <input asp-for="User.Cpf" type="hidden" />
+                    @if (!string.IsNullOrEmpty(Model.User.Email))
+                    {
+                        <div class="form-group text-center">
+                            <label class="text-muted font-weight-bold yellow-text"><i class="fa fa-user-circle"></i>@Model.User.Email</label>
+                            <input asp-for="User.Email" class="form-control" type="hidden">
+                        </div>
+                    }
+                    @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
+                    <div class="md-form mt-5">
+                        <input id="cod" asp-for="AccessCode.Key" class="form-control yellow-text" type="text">
+                        <label for="cod" class="yellow-text">Código de Verificação</label>
+                    </div>
+                    <div class="md-form">
+                        <input id="newSenha" asp-for="User.Password" class="form-control yellow-text" type="password">
+                        <label for="newSenha" class="yellow-text">Nova Senha</label>
+                    </div>
+                    <div class="md-form">
+                        <input id="Senha" asp-for="User.PasswordConfirmation" class="form-control yellow-text" type="password">
+                        <label for="Senha" class="yellow-text">Confirmação de nova senha</label>
+                    </div>
+                    <div class="form-row mt-5">
+                        <div class="col-md-6 mt-4 mt-md-0 col-12 order-1 order-md-0 ml-auto align-self-center  text-center">
+                            <a asp-action="recuperarsenha" asp-controller="user" class="font-weight-bold yellow-text">Anterior</a>
+                        </div>
+                        <div class="col-md-6 col-12 ml-auto">
+                            <button type="submit" class="btn btn-lg btn-warning btn-block text-capitalize text-dark font-weight-bold"> Próximo </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

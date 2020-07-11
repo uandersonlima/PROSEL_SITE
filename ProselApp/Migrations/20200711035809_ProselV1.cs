@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProselApp.Migrations
 {
-    public partial class ProselAppV1 : Migration
+    public partial class ProselV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace ProselApp.Migrations
                     Telephone = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
                     AccountStatus = table.Column<bool>(nullable: false),
-                    receive_emails = table.Column<bool>(nullable: false),
+                    Receive_emails = table.Column<bool>(nullable: false),
                     AccessType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

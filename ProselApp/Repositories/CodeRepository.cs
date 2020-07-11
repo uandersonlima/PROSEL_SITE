@@ -19,7 +19,7 @@ namespace ProselApp.Repositories
 
         public async Task AddAsync(AccessCode accessCode)
         {
-            await context.AccessCode.AddAsync(accessCode);
+            context.AccessCode.Update(accessCode);
             await context.SaveChangesAsync();
         }
 

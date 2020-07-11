@@ -93,15 +93,15 @@ namespace ProselApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Receive_emails")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Telephone")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("receive_emails")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Cpf");
 
@@ -111,7 +111,7 @@ namespace ProselApp.Migrations
             modelBuilder.Entity("ProselApp.Models.AcessCode.AccessCode", b =>
                 {
                     b.HasOne("ProselApp.Models.User", "User")
-                        .WithMany()
+                        .WithMany("AccessCodes")
                         .HasForeignKey("UserCpf");
                 });
 

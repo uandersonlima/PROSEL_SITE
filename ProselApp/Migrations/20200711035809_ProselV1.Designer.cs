@@ -9,8 +9,8 @@ using ProselApp.Data;
 namespace ProselApp.Migrations
 {
     [DbContext(typeof(ProselAppContext))]
-    [Migration("20200710213027_ProselAppV1")]
-    partial class ProselAppV1
+    [Migration("20200711035809_ProselV1")]
+    partial class ProselV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,15 +95,15 @@ namespace ProselApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Receive_emails")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Telephone")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("receive_emails")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Cpf");
 
@@ -113,7 +113,7 @@ namespace ProselApp.Migrations
             modelBuilder.Entity("ProselApp.Models.AcessCode.AccessCode", b =>
                 {
                     b.HasOne("ProselApp.Models.User", "User")
-                        .WithMany()
+                        .WithMany("AccessCodes")
                         .HasForeignKey("UserCpf");
                 });
 

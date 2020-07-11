@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ProselApp.Libraries.Validation;
+using ProselApp.Models.AcessCode;
 
 
 namespace ProselApp.Models
@@ -45,5 +46,6 @@ namespace ProselApp.Models
         public bool Receive_emails { get; set; }
         public string AccessType { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
+        public virtual ICollection<AccessCode> AccessCodes { get; set; }
     }
 }

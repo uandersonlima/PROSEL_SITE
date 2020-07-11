@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProselApp.Models
 {
@@ -17,7 +18,7 @@ namespace ProselApp.Models
         [Required(ErrorMessage = "Informe o campo {0}", AllowEmptyStrings = false)]
         [MinLength(14, ErrorMessage = "Senha deve conter no mínimo 6 caracteres")]
         public string Telephone { get; set; }
-        
+        [ForeignKey("User")]
         public string UserCpf { get; set; }
         public virtual User User { get; set; }
     }

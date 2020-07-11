@@ -38,6 +38,7 @@ namespace ProselApp.Services
             AccessCode newCode = new AccessCode
             {
                 Key = Key,
+                UserCpf = entity.Cpf,
                 User = entity,
                 CodeType = codeType,
                 GenDate = DateTime.Now

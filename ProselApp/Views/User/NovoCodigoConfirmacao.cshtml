@@ -1,0 +1,13 @@
+<h4>Reenviar Código</h4>
+<div class="row">
+    <div class="form-group col-12">
+        <div class="mt-4 rounded alert alert-danger text-danger col-md-12" role="alert">
+            Deseja reenviar seu código?
+        </div>
+        <form asp-action="NovoCodigoConfirmacao" method="post" class="mt-5 text-right">
+            <input type="hidden" name="codeType" value="@CodeType.Verification" />
+            <input type="button" class="btn btn-outline-light text-muted font-weight-bold border-0" data-dismiss="modal" value="NÃO" />
+            <input type="submit" value="SIM" class="btn btn-success font-weight-bold" />
+        </form>
+    </div>
+</div>
