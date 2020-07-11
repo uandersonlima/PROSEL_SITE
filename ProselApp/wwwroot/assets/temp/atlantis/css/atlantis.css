@@ -73,7 +73,7 @@ primary-color : #177dff
 secondary-color : #716aca
 info-color : #36a3f7
 success-color : #35cd3a
-warning-color : #ffa534
+warning-color : #fff159
 danger-color : #f3545d
 
 -------------------------------------------------------------------*/
@@ -209,11 +209,11 @@ b, .b, strong, .strong {
     }
 
 .text-warning, .text-warning a {
-    color: #FFAD46 !important;
+    color: #fff159 !important;
 }
 
     .text-warning:hover, .text-warning a:hover {
-        color: #FFAD46 !important;
+        color: #fff159!important;
     }
 
 .text-danger, .text-danger a {
@@ -2273,9 +2273,75 @@ body {
         background-color: #dcdbdb;
     }
 
+.sidebar[data-background-color="yellow"] {
+    background: #fff159 !important;
+}
+
+
+    .sidebar[data-background-color="yellow"] .user {
+        margin-top: 0px;
+        padding-top: 12.5px;
+        border-top: 1px solid;
+        border-color: rgba(0, 0, 0, .75) !important;
+    }
+
+        .sidebar[data-background-color="yellow"] .user .info a > span {
+            color: #1a2035;
+        }
+
+            .sidebar[data-background-color="yellow"] .user .info a > span .user-level {
+                color: #1a2035;
+            }
+
+        .sidebar[data-background-color="yellow"] .user .info .caret {
+            border-top-color: #1a2035;
+        }
+
+    .sidebar[data-background-color="yellow"] .nav .nav-item a {
+        color: #1a2035 !important;
+    }
+
+        .sidebar[data-background-color="yellow"] .nav .nav-item a p, .sidebar[data-background-color="yellow"] .nav .nav-item a i, .sidebar[data-background-color="yellow"] .nav .nav-item a .caret {
+            color: #1a2035 !important;
+        }
+
+        .sidebar[data-background-color="yellow"] .nav .nav-item a:hover, .sidebar[data-background-color="yellow"] .nav .nav-item a:focus, .sidebar[data-background-color="yellow"] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+            color: #1a2035 !important;
+        }
+
+            .sidebar[data-background-color="yellow"] .nav .nav-item a:hover p, .sidebar[data-background-color="yellow"] .nav .nav-item a:hover i, .sidebar[data-background-color="yellow"] .nav .nav-item a:hover .caret, .sidebar[data-background-color="yellow"] .nav .nav-item a:focus p, .sidebar[data-background-color="yellow"] .nav .nav-item a:focus i, .sidebar[data-background-color="yellow"] .nav .nav-item a:focus .caret, .sidebar[data-background-color="yellow"] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p, .sidebar[data-background-color="yellow"] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i, .sidebar[data-background-color="yellow"] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret {
+                color: #1a2035 !important;
+            }
+
+    .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:hover, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:focus, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a[data-toggle=collapse][aria-expanded=true] {
+        background: #1a2035 !important;
+        color: #fff159 !important;
+    }
+
+        .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a p, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a i, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a .caret, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:hover p, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:hover i, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:hover .caret, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:focus p, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:focus i, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a:focus .caret, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a[data-toggle=collapse][aria-expanded=true] p, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a[data-toggle=collapse][aria-expanded=true] i, .sidebar[data-background-color="yellow"] .nav > .nav-item.active > a[data-toggle=collapse][aria-expanded=true] .caret {
+            color: #fff159 !important;
+        }
+
+    .sidebar[data-background-color="yellow"] .nav .nav-section .text-section, .sidebar[data-background-color="yellow"] .nav .nav-section .sidebar-mini-icon {
+        color: #1a2035;
+    }
+
+    .sidebar[data-background-color="yellow"] .nav .nav-collapse li a .sub-item:before {
+        background: #eaeaea;
+    }
+
+    .sidebar[data-background-color="yellow"] .scrollbar-inner > .scroll-element .scroll-bar {
+        background-color: #f7f7f7;
+    }
+
+    .sidebar[data-background-color="yellow"] .scrollbar-inner > .scroll-element.scroll-draggable .scroll-bar, .sidebar[data-background-color="yellow"] .scrollbar-inner > .scroll-element:hover .scroll-bar {
+        background-color: #dcdbdb;
+    }
+
 .sidebar[data-background-color="blue"] {
     background: #1572E8 !important;
 }
+
 
     .sidebar[data-background-color="blue"] .user {
         margin-top: 0px;
@@ -3057,7 +3123,7 @@ body {
 .avatar-title {
     width: 100%;
     height: 100%;
-    background-color: #1269db;
+    background-color:  #fff159;
     color: #fff;
     display: flex;
     align-items: center;
@@ -5921,8 +5987,7 @@ label.error {
 
 /*     Notification dropdown    */
 .dropdown-title {
-    border-bottom: 1px solid #f1f1f1;
-    color: #444444;
+    color: #1a2035;
     font-size: 14px;
     font-weight: 600;
     padding: 12px 15px;
@@ -5936,13 +6001,14 @@ label.error {
 
     .notif-box .notif-center a, .messages-notif-box .notif-center a {
         display: flex;
-        color: #4d585f;
+        color: #1a2035;
     }
 
         .notif-box .notif-center a:hover, .messages-notif-box .notif-center a:hover {
             text-decoration: none;
-            background: #fafafa;
-            transition: all .2s;
+            background: #1a2035;
+            transition: all .4s;
+            color: #fff;
         }
 
         .notif-box .notif-center a .notif-icon, .messages-notif-box .notif-center a .notif-icon {
@@ -6036,7 +6102,6 @@ label.error {
         }
 
     .notif-box .see-all, .messages-notif-box .see-all {
-        border-top: 1px solid #f1f1f1;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -6071,7 +6136,7 @@ label.error {
     }
 
     .messages-notif-box .notif-center a {
-        border-bottom: 1px solid #f1f1f1;
+        border-bottom: 1px solid #1a2035;
     }
 
         .messages-notif-box .notif-center a:last-child {
@@ -6292,7 +6357,7 @@ label.error {
     }
 
         .navbar-header .dropdown-menu:after {
-            border-bottom: 8px solid #fff;
+            border-bottom: 8px solid #fff159;
             border-left: 8px solid transparent;
             border-right: 8px solid transparent;
             content: "";
@@ -8354,7 +8419,7 @@ label.error {
     padding: 0;
     position: absolute;
     z-index: 10;
-    background-color: #ffffff;
+    background-color: #fff159;
 }
 
     .scrollbar-outer > .scroll-element div {
@@ -13122,7 +13187,7 @@ body {
     }
 
     body[data-background-color="dark"] {
-        background: #1a2035;
+        background: #262d42;
     }
 
         body[data-background-color="dark"] .main-header {

@@ -13,6 +13,7 @@
                     </a>
                     <h4 class="card-title mb-4 mt-1 text-center font-weight-bold text-uppercase yellow-text">Recuperação de conta</h4>
                     <input asp-for="User.Cpf" type="hidden" />
+                    
                     @if (!string.IsNullOrEmpty(Model.User.Email))
                     {
                         <div class="form-group text-center">
@@ -34,7 +35,7 @@
                         <label for="Senha" class="yellow-text">Confirmação de nova senha</label>
                     </div>
                     <div class="form-row mt-5">
-                        <div class="col-md-6 mt-4 mt-md-0 col-12 order-1 order-md-0 ml-auto align-self-center  text-center">
+                        <div class="col-md-6 mt-4 mt-md-0 col-12 order-1 order-md-0 ml-auto align-self-center  text-center ">
                             <a asp-action="recuperarsenha" asp-controller="user" class="font-weight-bold yellow-text">Anterior</a>
                         </div>
                         <div class="col-md-6 col-12 ml-auto">

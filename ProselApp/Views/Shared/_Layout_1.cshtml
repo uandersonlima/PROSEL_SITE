@@ -21,7 +21,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-lg navbar-toggleable-lg navbar-dark bg-dark border-bottom box-shadow mb-5 justify-content-between py-1">
+        <nav class="navbar navbar-scrolled fixed-top navbar-expand-lg navbar-toggleable-lg navbar-dark bg-dark border-bottom box-shadow mb-5 justify-content-between py-1">
             <div class="container-fluid col-lg-10 col-sm-10">
                 <a class="navbar-brand py-0" href="#tela1" onclick="deslizar(this); return false;">
                     <img width="100" src="~/assets/img/logo-prin.png" alt="..." class="img-fluid mr-auto mr-md-0 ml-3">
@@ -96,13 +96,16 @@
         });
     </script>
     <script>
+        window.addEventListener('scroll', function(){
+            console.log(this)
+        })
         function deslizar(element) {
             let id = element.getAttribute('href'),
                 targetOffset = $(id).offset().top,
                 menuHeight = $('nav').innerHeight();
             $('html, body').animate({
                 scrollTop: targetOffset - menuHeight
-            }, 500);
+            }, 500, "easeInOutExpo");
         }
     </script>
     @RenderSection("Scripts", required: false)

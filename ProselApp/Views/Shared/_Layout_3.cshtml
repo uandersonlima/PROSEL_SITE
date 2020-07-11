@@ -11,7 +11,7 @@
 <html lang="pt-br">
 <head>
     <title>@ViewData["Title"]</title>
-    <link rel="icon" href="~/img/logo1.png" type="image/x-icon" />
+    <link rel="icon" href="~/assets/img/logo-title.png" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="utf-8" />
@@ -19,53 +19,44 @@
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <!-- Fonts and icons -->
-    <script src="~/assets/js/plugin/webfont/webfont.min.js"></script>
-    <script>
-        WebFont.load({
-            google: { "families": ["Lato:300,400,700,900"] },
-            custom: { "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../../assets/css/fonts.min.css'] },
-            active: function () {
-                sessionStorage.fonts = true;
-            }
-        });
-    </script>
+    <script src="~/assets/temp/atlantis/js/plugin/webfont/webfont.min.js"></script>
     <!-- CSS Files -->
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/atlantis.css">
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/all.min.css" />
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/style.css"/>
 </head>
-<body>
+<body data-background-color="dark">
     <div class="wrapper sidebar_minimize">
         <div class="main-header">
             <!-- Logo Header -->
-            <div class="logo-header" data-background-color="white">
+            <div class="logo-header" data-background-color="dark">
                 <button class="topbar-toggler more"><i class="icon-options-vertical text-primary"></i></button>
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">
                         <i class="icon-menu text-primary"></i>
                     </button>
                 </div>
-                <a class="logo" asp-area="" asp-controller="Agendas" asp-action="Index">
-                    <img src="~/img/Logoprimaryline.png" width="120" alt="navbar brand" class="navbar-brand">
+                <a class="logo" asp-area="" asp-controller="message" asp-action="Index">
+                    <img src="~/assets/img/Logo-prin.png" width="120" alt="navbar brand" class="navbar-brand">
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
-                        <i class="icon-menu text-primary"></i>
+                        <i class="icon-menu text-warning"></i>
                     </span>
                 </button>
             </div>
             <!-- End Logo Header -->
             <!-- Navbar Header -->
-            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="white">
+            <nav class="navbar navbar-header navbar-expand-lg" data-background-color="dark">
                 <div class="container-fluid col-11">
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         <li class="nav-item dropdown hidden-caret mr-5">
                             <a class="nav-link dropdown-toggle" href="#" id="notifications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bell text-primary" style="font-size:24px"></i>
-                                <span class="notification font-weight-bold">4</span>
+                                <i class="fa fa-bell text-warning" style="font-size:24px"></i>
+                                <span class="notification text-white font-weight-bold">4</span>
                             </a>
-                            <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="notifications">
+                            <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="notifications" style="background-color: #fff159;">
                                 <li>
                                     <div class="dropdown-title d-flex justify-content-between align-items-center">
                                         Notificações
@@ -77,7 +68,7 @@
                                         <div class="notif-center">
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/jm_denis.jpg" alt="Img Profile">
+                                                    <img src="~/assets/temp/atlantis/img/jm_denis.jpg" alt="Img Profile">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Jimmy Denis</span>
@@ -89,7 +80,7 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/chadengle.jpg" alt="Img Profile">
+                                                    <img src="~/assets/temp/atlantis/img/chadengle.jpg" alt="Img Profile">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Chad</span>
@@ -101,7 +92,7 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/mlane.jpg" alt="Img Profile">
+                                                    <img src="~/assets/temp/atlantis/img/mlane.jpg" alt="Img Profile">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Jhon Doe</span>
@@ -113,7 +104,7 @@
                                             </a>
                                             <a href="#">
                                                 <div class="notif-img">
-                                                    <img src="../assets/img/talha.jpg" alt="Img Profile">
+                                                    <img src="~/assets/temp/atlantis/img/talha.jpg" alt="Img Profile">
                                                 </div>
                                                 <div class="notif-content">
                                                     <span class="subject">Talha</span>
@@ -132,24 +123,24 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown hidden-caret">
-                            <a class="dropdown-toggle profile-pic text-primary font-weight-bold h3" data-toggle="dropdown" href="#" aria-expanded="false">
+                            <a class="dropdown-toggle profile-pic text-warning font-weight-bold h3" data-toggle="dropdown" href="#" aria-expanded="false">
                                 @Mask.PrimeiroNome(usuarioNome).ToUpper() <i class="ml-2 fa fa-caret-down" style="font-size:24px"></i>
                             </a>
-                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                            <ul class="dropdown-menu dropdown-user animated fadeIn" style="background-color: #fff159;">
                                 <li>
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <div class="user-box">
                                             <div class="u-text col-12">
-                                                <a asp-controller="Usuarios" asp-action="MyProfile" style="text-decoration-line:none;">
+                                                <a asp-controller="User" asp-action="MyProfile" style="text-decoration-line:none;">
                                                     <div class="row align-items-center">
                                                         <div class="avatar avatar-lg">
-                                                            <span class="avatar-title rounded-circle border border-white text-white font-weight-bold h1">@Mask.PrimeirasDuasLetrasNome(usuarioNome).ToUpper()</span>
+                                                            <span class="avatar-title rounded-circle bg-dark text-warning font-weight-bold h1">@Mask.PrimeirasDuasLetrasNome(usuarioNome).ToUpper()</span>
                                                         </div>
                                                         <div class="col ml-2">
                                                             <div class="row">
                                                                 <span class="font-weight-bold text-dark my-auto h4">@usuarioNome.ToUpperInvariant()</span>
                                                                 <div class="w-100"></div> <!--Quebra a linha sempre, não apagar-->
-                                                                <span class="text-dark op-8 my-auto h5">Ver seu perfil</span>
+                                                                <span class="text-dark op-8 my-auto h5 font-weight-bold">Ver seu perfil</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -173,39 +164,14 @@
             <!-- End Navbar -->
         </div>
         <!-- Sidebar -->
-        <div class="sidebar sidebar-style-2" data-background-color="blue">
+        <div class="sidebar sidebar-style-2" data-background-color="yellow">
             <div class="scroll-wrapper sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content py-5">
                     <ul class="nav">
                         <li class="nav-item py-2">
-                            <a asp-area="" asp-controller="Agendas" asp-action="Index">
+                            <a asp-area="" asp-controller="Message" asp-action="Index">
                                 <i class="fa fa-calendar-day"></i>
-                                <p class="font-weight-bold">Agenda</p>
-                            </a>
-                        </li>
-                        <li class="nav-item py-2">
-                            <a asp-area="" asp-controller="Pacientes" asp-action="Index">
-                                <i class="fas fa-user"></i>
-                                <p class="font-weight-bold">Pacientes</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item py-2">
-                            <a asp-area="" asp-controller="Estoques" asp-action="Index">
-                                <i class="fa fa-clipboard-list"></i>
-                                <p class="font-weight-bold">Estoques</p>
-                            </a>
-                        </li>
-                        <li class="nav-item py-2">
-                            <a asp-area="" asp-controller="Anamneses" asp-action="Index">
-                                <i class="fa fa-notes-medical"></i>
-                                <p class="font-weight-bold">Anamnese</p>
-                            </a>
-                        </li>
-                        <li class="nav-item py-2">
-                            <a asp-area="" asp-controller="Medicos" asp-action="Index">
-                                <i class="fa fa-user-nurse"></i>
-                                <p class="font-weight-bold">Medicos</p>
+                                <p class="font-weight-bold">Mensagens</p>
                             </a>
                         </li>
                     </ul>
@@ -218,7 +184,7 @@
             <div class="content">
                 @RenderBody()
             </div>
-            <footer class="footer text-warning">
+            <footer class="footer text-warning " data-background-color="dark">
                 <!-- Footer Text -->
                 <div class="container-fluid text-center text-md-right">
                     <div class="col-md-12">
