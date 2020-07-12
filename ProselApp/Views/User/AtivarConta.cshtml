@@ -2,23 +2,23 @@
 @model UserCode
 @{
     ViewData["Title"] = "Habilitar conta";
-    Layout = "_Layout_2.cshtml";
+    Layout = "_Layout_2";
 }
 <div class="container-fluid text-center">
     <div class="row justify-content-center align-items-center" style="height:100vh">
-        <div class="card col-12 col-md-6 col-lg-4 py-5 py-md-0">
+        <div class="card col-12 col-md-6 col-lg-4 py-5 py-md-0 elegant-color-dark">
             <div class="card-body">
                 <form method="post">
                     <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
-                        <img class="d-block mx-auto mb-4" src="~/img/Logoprimary.png" alt="" width="150">
+                        <img class="d-block mx-auto mb-4" src="~/img/Logo-prin.png" alt="" width="150">
                     </a>
-                    <h1 class="h3 mb-3 font-weight-normal text-muted">Ativar a Conta</h1>
+                    <h1 class="h3 mb-3 font-weight-bold yellow-text">ATIVAR CONTA</h1>
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
                     <input asp-for="User.Cpf" type="hidden" />
                     @if (!string.IsNullOrEmpty(Model.User.Email))
                     {
                         <div class="form-group text-center">
-                            <label class="h6 text-muted font-weight-bold"><i class="fa fa-user-circle"></i> @Model.User.Email</label>
+                            <label class="h5 yellow-text font-weight-bold"><i class="fa fa-user-circle"></i> @Model.User.Email</label>
                             <input asp-for="User.Email" class="form-control" placeholder="Email" type="hidden">
                         </div>
                     }
@@ -27,9 +27,9 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="md-form text-left">
-                                        <i class="fa fa-code prefix grey-text"></i>
-                                        <input asp-for="AccessCode.Key" id="cod" class="form-control" type="text">
-                                        <label for="cod">Código de Verificação</label>
+                                        <i class="fa fa-code prefix yellow-text"></i>
+                                        <input asp-for="AccessCode.Key" id="cod" class="form-control yellow-text" type="text">
+                                        <label for="cod" class="yellow-text">Código de Verificação</label>
                                     </div>
                                 </div>
                                 <div class="col-12 text-left ml-0 ml-md-5">
@@ -43,10 +43,10 @@
                     </div>
                     <div class="form-row mt-5">
                         <div class="col-md-6 mt-4 mt-md-0 col-12 order-1 order-md-0 ml-auto align-self-center">
-                            <a asp-action="Logout" asp-controller="User" class="font-weight-bold">Sair</a>
+                            <a asp-action="Logout" asp-controller="User" class="font-weight-bold yellow-text">Sair</a>
                         </div>
                         <div class="col-md-6 col-12 ml-auto">
-                            <button type="submit" class="btn btn-lg btn-primary btn-block text-capitalize"> Ativar Conta </button>
+                            <button type="submit" class="btn btn-lg btn-warning btn-block text-capitalize font-weight-bold text-dark"> Ativar Conta </button>
                         </div>
                     </div>
                 </form>

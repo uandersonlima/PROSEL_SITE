@@ -16,6 +16,7 @@ namespace ProselApp.Services.Interfaces
         Task DeleteAsync(string cpf);
         Task DeleteAsync(User entity);
         Task EnableOrDisableAsync(User entity);
+        Task<List<User>> GetByPermission(string perm);
         Task<User> GetByCpfAsync(string cpf);
         List<User> GetUserByEmail(string email);
         Task<User> GetUserByLogin(string email, string senha);

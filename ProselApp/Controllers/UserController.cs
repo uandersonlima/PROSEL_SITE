@@ -106,7 +106,7 @@ namespace ProselApp.Controllers
             }
             return View(User);
         }
-        
+
         [HttpGet]
         public IActionResult RecuperarSenha()
         {
@@ -192,24 +192,25 @@ namespace ProselApp.Controllers
         [HttpGet]
         public IActionResult AtivarConta()
         {
-            var loggedUser = loginSvc.GetUser();
+            // var loggedUser = loginSvc.GetUser();
 
-            if (loggedUser is null)
-            {
-                return RedirectToAction("Login", "users");
-            }
+            // if (loggedUser is null)
+            // {
+            //     return RedirectToAction("Login", "users");
+            // }
 
-            if (loggedUser.AccountStatus != true)
-            {
-                UserCode viewModel = new UserCode
-                {
-                    User = loggedUser
-                };
+            // if (loggedUser.AccountStatus != true)
+            // {
+            //     UserCode viewModel = new UserCode
+            //     {
+            //         User = loggedUser
+            //     };
 
-                return View(viewModel);
+            //     return View(viewModel);
 
-            }
-            return RedirectToAction("Index", "Agendas");
+            // }
+            // return RedirectToAction("Index", "Agendas");
+            return View(new UserCode{User = new User{Email="oi@gmail.com"}});
         }
 
         [HttpPost]

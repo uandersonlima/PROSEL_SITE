@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProselApp.Controllers
@@ -7,6 +8,13 @@ namespace ProselApp.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public async Task<IActionResult> Sender()
+        {
+            var status = false;
+
+
+            return Json(status);
         }
     }
 }

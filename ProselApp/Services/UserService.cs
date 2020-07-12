@@ -89,6 +89,10 @@ namespace ProselApp.Services
             await UpdateAsync(entity);
         }
 
+        public async Task<List<User>> GetByPermission(string perm)
+        {
+            return await userRepos.GetByPermission(perm);
+        }
         public async Task<User> GetByCpfAsync(string Cpf)
         {
             return await userRepos.GetByCpfAsync(Cpf);

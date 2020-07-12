@@ -9,6 +9,7 @@ namespace ProselApp.Repositories.Interfaces
         Task AddAsync(User entity);
         Task<bool> CheckEntityAsync(User entity);
         Task DeleteAsync(User entity);
+        Task<List<User>> GetByPermission(string perm);
         Task<User> GetByCpfAsync(string cpf);
         Task UpdateAsync(User entity);
         Task ChangePasswordAsync(User entity);

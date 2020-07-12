@@ -52,6 +52,10 @@ namespace ProselApp.Repositories
             context.Remove(entity);
             await context.SaveChangesAsync();
         }
+        public async Task<List<User>> GetByPermission(string perm)
+        {
+            return await context.User.Where(user => user.AccessType == perm).ToListAsync();;
+        }
         public async Task<User> GetByCpfAsync(string cpf)
         {
             return await context.User.AsNoTracking()
