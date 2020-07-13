@@ -1,4 +1,4 @@
-@model User
+@model UserToken
 @{
     ViewData["Title"] = "Cadastra-se";
     Layout = "~/Views/Shared/_Layout_2.cshtml";
@@ -18,6 +18,7 @@
                     <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
                         <img class="d-block mx-auto mb-4" src="~/assets/img/logo-prin.png" alt="" width="150">
                     </a>
+                    <input asp-for="Token.SecurityToken" id="ignore" hidden/>
                     <h1 class="yellow-text font-weight-bold">CADASTRO</h1>
                     <p class="yellow-text">Vamos iniciar sua experiência</p>
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
@@ -27,9 +28,9 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-id-card prefix yellow-text"></i>
-                                        <input type="text" asp-for="Name" id="Name" class="form-control yellow-text">
-                                        <label asp-for="Name" for="Name" class="yellow-text">Seu nome</label>
-                                        <span asp-validation-for="Name" class="ml-5 d-flex text-danger"></span>
+                                        <input type="text" asp-for="User.Name" id="Name" class="form-control yellow-text">
+                                        <label asp-for="User.Name" for="Name" class="yellow-text">Seu nome</label>
+                                        <span asp-validation-for="User.Name" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -41,9 +42,9 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-envelope prefix yellow-text"></i>
-                                        <input asp-for="Email" id="email" class="form-control yellow-text" type="email">
+                                        <input asp-for="User.Email" id="email" class="form-control yellow-text" type="email">
                                         <label for="email" class="font-weight-light yellow-text">Seu email</label>
-                                        <span asp-validation-for="Email" class="ml-5 d-flex text-danger"></span>
+                                        <span asp-validation-for="User.Email" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -55,9 +56,9 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-lock prefix yellow-text"></i>
-                                        <input asp-for="Password" id="Password" class="form-control yellow-text" type="password">
+                                        <input asp-for="User.Password" id="Password" class="form-control yellow-text" type="password">
                                         <label for="Password" class="font-weight-light yellow-text">Sua Senha</label>
-                                        <span asp-validation-for="Password" class="ml-5 d-flex text-danger"></span>
+                                        <span asp-validation-for="User.Password" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -69,9 +70,9 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-key prefix yellow-text"></i>
-                                        <input class="form-control yellow-text" asp-for="PasswordConfirmation" type="password">
-                                        <label asp-for="PasswordConfirmation" class="font-weight-light yellow-text">Confirme sua senha</label>
-                                        <span asp-validation-for="PasswordConfirmation" class="ml-5 d-flex text-danger"></span>
+                                        <input class="form-control yellow-text" asp-for="User.PasswordConfirmation" type="password">
+                                        <label asp-for="User.PasswordConfirmation" class="font-weight-light yellow-text">Confirme sua senha</label>
+                                        <span asp-validation-for="User.PasswordConfirmation" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -101,9 +102,9 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-fingerprint prefix yellow-text"></i>
-                                        <input asp-for="Cpf" id="cpf" class="form-control cpf yellow-text">
-                                        <label asp-for="Cpf" for="cpf" class="yellow-text">Seu CPF</label>
-                                        <span asp-validation-for="Cpf" class="ml-5 d-flex text-danger"></span>
+                                        <input asp-for="User.Cpf" id="cpf" class="form-control cpf yellow-text">
+                                        <label asp-for="User.Cpf" for="cpf" class="yellow-text">Seu CPF</label>
+                                        <span asp-validation-for="User.Cpf" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -115,9 +116,9 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-phone-square prefix yellow-text"></i>
-                                        <input asp-for="Telephone" id="Telephone" class="form-control tel yellow-text">
-                                        <label asp-for="Telephone" for="Telephone" class="yellow-text">Seu telefone</label>
-                                        <span asp-validation-for="Telephone" class="ml-5 d-flex text-danger"></span>
+                                        <input asp-for="User.Telephone" id="Telephone" class="form-control tel yellow-text">
+                                        <label asp-for="User.Telephone" for="Telephone" class="yellow-text">Seu telefone</label>
+                                        <span asp-validation-for="User.Telephone" class="ml-5 d-flex text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +129,7 @@
                             <div class="form-row">
                                 <div class="col">
                                     <div class="custom-control custom-switch">
-                                        <input asp-for="Receive_emails" type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
+                                        <input asp-for="User.Receive_emails" type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
                                         <label class="custom-control-label yellow-text" for="customSwitches">Deseja saber quem te procurou atráves do seu email?</label>
                                     </div>
                                 </div>      
@@ -179,10 +180,13 @@
         function VerificaPaginaAtual(pagA) {
             let camposValidos = pagA.querySelectorAll("input")
             for (let check of camposValidos) {
-                let invalid = check.getAttribute("aria-invalid")
-                check.focus()
-                if (invalid != "false") {
-                    return false
+                if(check.id != "ignore")
+                {   
+                    let invalid = check.getAttribute("aria-invalid")
+                    check.focus()
+                    if (invalid != "false") {
+                        return false
+                    }
                 }
             }
             return true

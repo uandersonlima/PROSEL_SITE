@@ -23,7 +23,7 @@
                     }
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }
                     <div class="md-form mt-5">
-                        <input id="cod" asp-for="AccessCode.Key" class="form-control yellow-text" type="text">
+                        <input id="cod" asp-for="AccessCode.Key" class="form-control yellow-text" type="text" autofocus>
                         <label for="cod" class="yellow-text">Código de Verificação</label>
                     </div>
                     <div class="md-form">

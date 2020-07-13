@@ -1,295 +1,236 @@
 ﻿@{
-Layout = null;
+Layout = "_Layout_1";
+ViewBag.Title = "ADV - Home";
 }
+@model Message
 @inject IUserService userSvc
 @{
 var users = await userSvc.GetByPermission(AccessType.User);
     List<string> contatos = users.Select(user => user.Telephone).ToList();
     List<string> emails = users.Select(user => user.Email).ToList();
 }
-        <!DOCTYPE html>
-        <html lang="en">
 
-        <head>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-            <meta name="description" content="" />
-            <meta name="author" content="" />
-            <title>Consultorias ADV</title>
-            <!-- Favicon-->
-            <link rel="icon" type="image/x-icon" href="~/assets/img/logo-title.png" />
-            <!-- Font Awesome icons (free version)-->
-            <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
-            <!-- Google fonts-->
-            <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-            <!-- Third party plugin CSS-->
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css"
-                rel="stylesheet" />
-            <!-- Core theme CSS (includes Bootstrap)-->
-            <link href="~/assets/css/styles.css" rel="stylesheet" />
-            <style>
-                body {
-                    font-family: 'Roboto', sans-serif;
-                }
-            </style>
-        </head>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <h1 class="text-uppercase text-white font-weight-bold">Os melhores advogados para você a um
+                    clique de distância</h1>
+                <hr class="divider my-4" />
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+                <p class="text-warning font-weight-light mb-5">Advogados refinados e experiêntes,
+                    disponíveis em todo o brasil</p>
+                <a class="btn btn-dark btn-xl js-scroll-trigger" href="#about">Saiba mais</a>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- About-->
+<section class="page-section bg-primary" id="about">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mt-0">Nós somos o que você precisa</h2>
+                <hr class="divider light my-4" />
+                <p class="text-white-50 mb-4 text-justify">Missão – Prestar serviços jurídicos com
+                    excelência, oferecendo soluções inovadoras para obtenção de resultados expressivos que
+                    garantam a satisfação de seus clientes.</p>
+                <p class="text-white-50 mb-4 text-justify">Visão – Manter-se como referência nos segmentos
+                    em que atua, sendo sempre reconhecida pelos seus clientes como uma empresa moderna,
+                    inovadora e eficiente.</p>
+                <p class="text-white-50 mb-4 text-justify">
+                    Valores:
+                    <br>1. ExcelênciaPrestar serviços com eficiência e qualidade, superando as expectativas
+                    de cada um de seus clientes;
 
-        <body id="page-top">
-            <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-2" id="mainNav">
-                <div class="container">
-                    <a class="navbar-brand js-scroll-trigger py-0" href="#page-top"><img
-                            src="~/assets/img/Logo-prin.png" width="110" class="img-fluid"></a>
-                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" style="font-size:18px"
-                                    href="#about">Sobre nós</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" style="font-size:18px"
-                                    href="#services">Atendimento</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" style="font-size:18px"
-                                    href="#portfolio">Advogados</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" style="font-size:18px"
-                                    href="#contact">Contato</a></li>
-                            <li class="nav-item"><a class="nav-link js-scroll-trigger" asp-action="login"><span
-                                        class="fa fa-user" style="font-size:22px"></span></a></li>
-                        </ul>
+                    <br>2. Integridade e Ética Atuar de forma integra e ética na condução dos negócios e na
+                    relação com seus colaboradores;
+
+                    <br>3. RespeitoInteragir com respeito nas relações pessoais e profissionais;
+
+                    <br>4. Comprometimento Compromisso dos sócios e colaboradores com os objetivos da
+                    organização;
+                </p>
+                <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Como funciona</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container">
+        <h2 class="text-center mt-0">Nosso atendimento</h2>
+        <hr class="divider my-4" />
+        <div class="row align-items-start">
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <i class="fas fa-4x fa-gem text-warning mb-4"></i>
+                    <h3 class="h4 mb-2">Qualidade</h3>
+                    <p class="text-muted mb-0">Possuímos os profissionais mais qualificados do mercado</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <i class="fas fa-4x fa-globe text-warning mb-4"></i>
+                    <h3 class="h4 mb-2">Online</h3>
+                    <p class="text-muted mb-0">Atendimento 100% online, deixe seu contato e entraremos em
+                        contato com você</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <i class="fas fa-4x fa-heart text-warning  mb-4"></i>
+                    <h3 class="h4 mb-2">Amor</h3>
+                    <p class="text-muted mb-0">Amamos o que fazemos por isso nos dedicamos ao máximo para
+                        garantirmos sua satisfação</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 text-center">
+                <div class="mt-5">
+                    <i class="fas fa-4x fa-laptop-code text-warning  mb-4"></i>
+                    <h3 class="h4 mb-2">Rápido</h3>
+                    <p class="text-muted mb-0">Te atualizamos o mais rapidamente possível sobre teu processo
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Portfolio-->
+<div id="portfolio">
+    <div class="container-fluid p-0">
+        <div class="row no-gutters">
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg">
+                    <img class="img-fluid img-thumbnail" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category">Direito civil</div>
+                        <div class="project-name font-weight-bold">Camila Allen</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg">
+                    <img class="img-fluid img-thumbnail" src="assets/img/portfolio/thumbnails/2.jpg" alt="" />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category"> Direito administrativo</div>
+                        <div class="project-name font-weight-bold">Cristinano Gonçalves</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg">
+                    <img class="img-fluid img-thumbnail" src="assets/img/portfolio/thumbnails/3.jpg" alt="" />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category">Direito ambiental</div>
+                        <div class="project-name font-weight-bold">Alicia Victória</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg">
+                    <img class="img-fluid img-thumbnail" src="assets/img/portfolio/thumbnails/4.jpg" alt="" />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category">Direito comercial</div>
+                        <div class="project-name font-weight-bold">Vitor Pimentel</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg">
+                    <img class="img-fluid img-thumbnail" src="assets/img/portfolio/thumbnails/5.jpg" alt="" />
+                    <div class="portfolio-box-caption">
+                        <div class="project-category">Direito do consumidor</div>
+                        <div class="project-name font-weight-bold">Erik Ferreira</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg">
+                    <img class="img-fluid img-thumbnail" src="assets/img/portfolio/thumbnails/6.jpg" alt="" />
+                    <div class="portfolio-box-caption p-3">
+                        <div class="project-category">Direito contratual</div>
+                        <div class="project-name font-weight-bold">Patrícia Oliveira</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Call to action-->
+<section class="page-section bg-primary text-white">
+    <div class="container text-center">
+        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#contact">Fale conosco</a>
+    </div>
+</section>
+<!-- Contact-->
+<section class="page-section" id="contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mt-0">Envie-nos uma mensagem agora mesmo</h2>
+                <hr class="divider my-4" />
+                <p class="text-muted mb-5">Pronto para começar seu processo conosco? Ligue para nós
+                    ou envie-nos uma mensagem e entraremos em contato o mais breve possível!</p>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-6 order-2 order-md-0">
+                <div class="row">
+                    <div class="mx-auto text-center mb-5 mb-lg-0">
+                        <i class="fa fa-phone fa-3x mb-3 text-muted"></i>
+                        <div class="w-100"></div>
+                        @foreach (var item in contatos)
+                        {
+                        <div><span class="text-dark">@item<span></div>
+                        }
                     </div>
                 </div>
-            </nav>
-            <!-- Masthead-->
-            <header class="masthead">
-                <div class="container h-100">
-                    <div class="row h-100 align-items-center justify-content-center text-center">
-                        <div class="col-lg-10 align-self-end">
-                            <h1 class="text-uppercase text-white font-weight-bold">Os melhores advogados para você a um
-                                clique de distância</h1>
-                            <hr class="divider my-4" />
-                        </div>
-                        <div class="col-lg-8 align-self-baseline">
-                            <p class="text-warning font-weight-light mb-5">Advogados refinados e experiêntes,
-                                disponíveis em todo o brasil</p>
-                            <a class="btn btn-dark btn-xl js-scroll-trigger" href="#about">Saiba mais</a>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- About-->
-            <section class="page-section bg-primary" id="about">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
-                            <h2 class="text-white mt-0">Nós somos o que você precisa</h2>
-                            <hr class="divider light my-4" />
-                            <p class="text-white-50 mb-4 text-justify">Missão – Prestar serviços jurídicos com
-                                excelência, oferecendo soluções inovadoras para obtenção de resultados expressivos que
-                                garantam a satisfação de seus clientes.</p>
-                            <p class="text-white-50 mb-4 text-justify">Visão – Manter-se como referência nos segmentos
-                                em que atua, sendo sempre reconhecida pelos seus clientes como uma empresa moderna,
-                                inovadora e eficiente.</p>
-                            <p class="text-white-50 mb-4 text-justify">
-                                Valores:
-                                <br>1. ExcelênciaPrestar serviços com eficiência e qualidade, superando as expectativas
-                                de cada um de seus clientes;
-
-                                <br>2. Integridade e Ética Atuar de forma integra e ética na condução dos negócios e na
-                                relação com seus colaboradores;
-
-                                <br>3. RespeitoInteragir com respeito nas relações pessoais e profissionais;
-
-                                <br>4. Comprometimento Compromisso dos sócios e colaboradores com os objetivos da
-                                organização;
-                            </p>
-                            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Como funciona</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Services-->
-            <section class="page-section" id="services">
-                <div class="container">
-                    <h2 class="text-center mt-0">Nosso atendimento</h2>
-                    <hr class="divider my-4" />
-                    <div class="row align-items-start">
-                        <div class="col-lg-3 col-md-6 text-center">
-                            <div class="mt-5">
-                                <i class="fas fa-4x fa-gem text-warning mb-4"></i>
-                                <h3 class="h4 mb-2">Qualidade</h3>
-                                <p class="text-muted mb-0">Possuímos os profissionais mais qualificados do mercado</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 text-center">
-                            <div class="mt-5">
-                                <i class="fas fa-4x fa-globe text-warning mb-4"></i>
-                                <h3 class="h4 mb-2">Online</h3>
-                                <p class="text-muted mb-0">Atendimento 100% online, deixe seu contato e entraremos em
-                                    contato com você</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 text-center">
-                            <div class="mt-5">
-                                <i class="fas fa-4x fa-heart text-warning  mb-4"></i>
-                                <h3 class="h4 mb-2">Amor</h3>
-                                <p class="text-muted mb-0">Amamos o que fazemos por isso nos dedicamos ao máximo para
-                                    garantirmos sua satisfação</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 text-center">
-                            <div class="mt-5">
-                                <i class="fas fa-4x fa-laptop-code text-warning  mb-4"></i>
-                                <h3 class="h4 mb-2">Rápido</h3>
-                                <p class="text-muted mb-0">Te atualizamos o mais rapidamente possível sobre teu processo
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Portfolio-->
-            <div id="portfolio">
-                <div class="container-fluid p-0">
-                    <div class="row no-gutters">
-                        <div class="col-lg-4 col-sm-6">
-                            <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg">
-                                <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
-                                <div class="portfolio-box-caption">
-                                    <div class="project-category text-white-50">Category</div>
-                                    <div class="project-name">Project Name</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg">
-                                <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="" />
-                                <div class="portfolio-box-caption">
-                                    <div class="project-category text-white-50">Category</div>
-                                    <div class="project-name">Project Name</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg">
-                                <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="" />
-                                <div class="portfolio-box-caption">
-                                    <div class="project-category text-white-50">Category</div>
-                                    <div class="project-name">Project Name</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg">
-                                <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="" />
-                                <div class="portfolio-box-caption">
-                                    <div class="project-category text-white-50">Category</div>
-                                    <div class="project-name">Project Name</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg">
-                                <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="" />
-                                <div class="portfolio-box-caption">
-                                    <div class="project-category text-white-50">Category</div>
-                                    <div class="project-name">Project Name</div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-lg-4 col-sm-6">
-                            <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg">
-                                <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="" />
-                                <div class="portfolio-box-caption p-3">
-                                    <div class="project-category text-black-50">Category</div>
-                                    <div class="project-name ">Project Name</div>
-                                </div>
-                            </a>
-                        </div>
+                <div class="row mt-3">
+                    <div class="mx-auto text-center">
+                        <i class="fa fa-envelope fa-3x mb-3 text-muted"></i>
+                        <div class="w-100"></div>
+                        <!-- Make sure to change the email address in BOTH the anchor text and the link target below!-->
+                        @foreach (var item in emails)
+                        {
+                        <a class="text-dark" href="mailto:@item">@item</a>
+                        }
                     </div>
                 </div>
             </div>
-            <!-- Call to action-->
-            <section class="page-section bg-primary text-white">
-                <div class="container text-center">
-                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="#contact">Fale conosco</a>
-                </div>
-            </section>
-            <!-- Contact-->
-            <section class="page-section" id="contact">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 text-center">
-                            <h2 class="mt-0">Envie-nos uma mensagem agora mesmo</h2>
-                            <hr class="divider my-4" />
-                            <p class="text-muted mb-5">Pronto para começar seu processo conosco? Ligue para nós
-                                ou envie-nos uma mensagem e entraremos em contato o mais breve possível!</p>
-                        </div>
+            <div class="col-md-6">
+                @*asp-action="Sender" asp-asp-controller="Message"*@
+                <form>
+                    <div class="form-group">
+                        <label for="sender">Nome pessoa física ou jurídica</label>
+                        <input type="text" asp-for="Sender" class="form-control" id="sender" placeholder="Ex. Maria, Insumos Ltda">
+                        <span asp-validation-for="Sender" class="ml-5 d-flex text-danger"></span>
                     </div>
-                    <div class="row align-items-center">
-                        <div class="col-md-6 order-2 order-md-0">
-                            <div class="row">
-                                <div class="mx-auto text-center mb-5 mb-lg-0">
-                                    <i class="fa fa-phone fa-3x mb-3 text-muted"></i>
-                                    @foreach (var item in contatos)
-                                    {
-                                    <div><span class="text-dark">@item<span></div>
-                                    }
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mx-auto text-center">
-                                    <i class="fa fa-envelope fa-3x mb-3 text-muted"></i>
-                                    <!-- Make sure to change the email address in BOTH the anchor text and the link target below!-->
-                                    @foreach (var item in emails)
-                                    {
-                                    <a class="text-dark" href="mailto:@item">@item</a>
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            @*asp-action="Sender" asp-asp-controller="Message"*@
-                            <form>
-                                <div class="form-group">
-                                    <label for="sender">Nome pessoa física ou jurídica</label>
-                                    <input type="text" class="form-control" id="sender" placeholder="Ex. Maria, Insumos Ltda">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email para contato</label>
-                                    <input type="email" class="form-control" id="email" placeholder="Ex. seunome@stmp.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="tel">Telefone para contato</label>
-                                    <input type="text" class="form-control tel" id="tel" placeholder="(55) 55555-5555">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message">Deixe aqui sua mensagem...</label>
-                                    <textarea class="form-control" id="message" rows="3"></textarea>
-                                </div>
-                                <div class="form-group float-right">
-                                    <input type="submit" value="ENVIAR" class="btn btn-primary rounded-pill font-weight-bold"/>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="form-group">
+                        <label for="email">Email para contato</label>
+                        <input type="email" asp-for="Email" class="form-control" id="email" placeholder="Ex. seunome@stmp.com">
+                        <span asp-validation-for="Email" class="ml-5 d-flex text-danger"></span>
                     </div>
-                </div>
-            </section>
-            <!-- Footer-->
-            <footer class="bg-light py-5">
-                <div class="container">
-                    <div class="small text-center text-muted">Copyright &copy; @DateTime.Now.Year PROSEL</div>
-            </footer>
-            <!-- Bootstrap core JS-->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
-            <!-- Third party plugin JS-->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-            <script
-                src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
-            <!-- Core theme JS-->
-            <script src="~/assets/js/scripts.js"></script>
-            <script src='~/assets/temp/atlantis/js/core/jquery.mask.js'></script>
-            <script src="~/assets/temp/atlantis/js/odontoapp/app/app_scripts.js"></script>
-        </body>
-
-        </html>
+                    <div class="form-group">
+                        <label for="tel">Telefone para contato</label>
+                        <input type="text" asp-for="Telephone" class="form-control tel" id="tel" placeholder="(55) 55555-5555">
+                        <span asp-validation-for="Telephone" class="ml-5 d-flex text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Deixe aqui sua mensagem...</label>
+                        <textarea asp-for="Description" class="form-control" id="message" rows="3"></textarea>
+                        <span asp-validation-for="Description" class="ml-5 d-flex text-danger"></span>
+                    </div>
+                    <div class="form-group float-right">
+                        <input type="submit" value="ENVIAR" class="btn btn-primary rounded-pill font-weight-bold"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -48,6 +48,9 @@ namespace ProselApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -60,7 +63,13 @@ namespace ProselApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("TimeReceived")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("UserCpf")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("ViewedTime")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Messagecode");
@@ -68,6 +77,34 @@ namespace ProselApp.Migrations
                     b.HasIndex("UserCpf");
 
                     b.ToTable("Message");
+                });
+
+            modelBuilder.Entity("ProselApp.Models.Token", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SecurityToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TokenExpiration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserCpf")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserCpf");
+
+                    b.ToTable("Token");
                 });
 
             modelBuilder.Entity("ProselApp.Models.User", b =>
@@ -117,8 +154,15 @@ namespace ProselApp.Migrations
 
             modelBuilder.Entity("ProselApp.Models.Message", b =>
                 {
-                    b.HasOne("ProselApp.Models.User", "User")
+                    b.HasOne("ProselApp.Models.User", null)
                         .WithMany("Messages")
+                        .HasForeignKey("UserCpf");
+                });
+
+            modelBuilder.Entity("ProselApp.Models.Token", b =>
+                {
+                    b.HasOne("ProselApp.Models.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserCpf");
                 });
 #pragma warning restore 612, 618

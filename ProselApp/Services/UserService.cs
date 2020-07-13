@@ -62,7 +62,7 @@ namespace ProselApp.Services
                 if (!await CheckEntityAsync(entity))
                     throw new NotFoundException("User não existe");
                 await ChangePasswordAsync(entity);
-                await codeSvc.DeleteAsync(accessCode);
+                await codeSvc.DeleteAsync(receivedCode);
                 return true;
             }
             return false;

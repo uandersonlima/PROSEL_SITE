@@ -51,11 +51,15 @@ namespace ProselApp.Services.IoC
             svc.AddScoped<ICodeService, CodeService>();
             svc.AddScoped<IEmailService, EmailService>();
             svc.AddScoped<ILoginService, LoginService>();
+            svc.AddScoped<IMessageService, MessageService>();
             svc.AddScoped<ISessionService, SessionService>();
+            svc.AddScoped<ITokenService, TokenService>();
             svc.AddScoped<IUserService, UserService>();
 
             //Repositories
             svc.AddScoped<ICodeRepository, CodeRepository>();
+            svc.AddScoped<IMessageRepository, MessageRepository>();
+            svc.AddScoped<ITokenRepository, TokenRepository>();
             svc.AddScoped<IUserRepository, UserRepository>();
 
         }

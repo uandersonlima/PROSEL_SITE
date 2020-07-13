@@ -9,6 +9,7 @@ using ProselApp.Models.Const;
 using ProselApp.Models.AcessCode;
 using System;
 using ProselApp.Models.ViewModel;
+using System.Globalization;
 
 namespace ProselApp.Controllers
 {
@@ -17,13 +18,15 @@ namespace ProselApp.Controllers
         private readonly ICodeService codeSvc;
         private readonly IConfiguration conf;
         private readonly ILoginService loginSvc;
+        private readonly ITokenService tokenSvc;
         private readonly IUserService userSvc;
 
-        public UserController(ICodeService codeSvc, IConfiguration conf, ILoginService loginSvc, IUserService userSvc)
+        public UserController(ICodeService codeSvc, IConfiguration conf, ILoginService loginSvc, ITokenService tokenSvc, IUserService userSvc)
         {
             this.codeSvc = codeSvc;
             this.conf = conf;
             this.loginSvc = loginSvc;
+            this.tokenSvc = tokenSvc;
             this.userSvc = userSvc;
         }
 
@@ -39,7 +42,7 @@ namespace ProselApp.Controllers
             {
                 return View();
             }
-            return RedirectToAction("Index", "Agendas");
+            return RedirectToAction("Index", "message");
         }
 
         [HttpPost, Route("Login")]
@@ -78,33 +81,67 @@ namespace ProselApp.Controllers
                 return RedirectToAction("MyProfile", user);
             }
             await userSvc.UpdateProfileAsync(user);
-            return RedirectToAction("Index", "Agendas");
+            return RedirectToAction("Index", "message");
+        }
+
+        public IActionResult NovoUsuario()
+        {
+            if (loginSvc.GetUser() != null)
+            {
+                return RedirectToAction("index", "message");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NovoUsuario(Token token)
+        {
+            return RedirectToAction("cadastrousuario", "user", token);
+        }
+        public async Task<IActionResult> GerarNovoToken()
+        {
+            var elapsedTime = await tokenSvc.ElapsedTimeLastTokenAsync();
+            var _1day = new TimeSpan(23, 59, 59);
+            TempData["MSG_A"] = string.Format(MSG.MSG_E016, _1day.Subtract(elapsedTime));
+
+            if (elapsedTime >= _1day)
+            {
+                TempData["MSG_A"] = null;
+                await tokenSvc.CreateNewKeyAsync();
+                TempData["MSG_S"] = MSG.MSG_S009;
+            }
+            return RedirectToAction("novousuario");
         }
 
         [HttpGet, Route("Cadastro")]
-        public IActionResult CadastroUsuario()
+        public async Task<IActionResult> CadastroUsuario(Token token)
         {
-            if (loginSvc.GetUser() is null)
+            if (loginSvc.GetUser() != null)
+                return RedirectToAction("index", "message");
+            if (token == null || !await tokenSvc.CheckTokenAsync(token))
             {
-                return View();
+                TempData["MSG_E"] = MSG.MSG_E017;
+                return RedirectToAction("novousuario");
             }
-            return RedirectToAction("Index", "Agendas");
+            return View(new UserToken { Token = token });
         }
 
         [HttpPost, Route("Cadastro")]
-        public async Task<IActionResult> CadastroUsuario([FromForm] User User)
+        public async Task<IActionResult> CadastroUsuario(UserToken usertoken)
         {
             if (ModelState.IsValid)
             {
-                await userSvc.AddAsync(User);
+                var token = await tokenSvc.GetByHashAsync(usertoken.Token.SecurityToken);
+                token.User = usertoken.User;
+                await tokenSvc.UpdateAsync(token);
                 TempData["MSG_S"] = MSG.MSG_S006;
-                if (!(User.Email.ToLower() == conf.GetValue<string>("Email:Username").ToLower()))
+                if (!(usertoken.User.Email.ToLower() == conf.GetValue<string>("Email:Username").ToLower()))
                 {
-                    await codeSvc.CreateNewKeyAsync(User, CodeType.Verification);
+                    await codeSvc.CreateNewKeyAsync(usertoken.User, CodeType.Verification);
                 }
                 return RedirectToAction(nameof(Login));
             }
-            return View(User);
+            return View(usertoken);
         }
 
         [HttpGet]
@@ -152,22 +189,13 @@ namespace ProselApp.Controllers
         [HttpPost]
         public async Task<IActionResult> NovaSenha(UserCode usercode)
         {
-            ModelState.Remove("user.Nome");
-            ModelState.Remove("user.TipoAcesso");
-            ModelState.Remove("user.SituacaoConta");
-            ModelState.Remove("user.SituacaoPagamento");
-            ModelState.Remove("user.NumeroPlano");
-            ModelState.Remove("user.Nascimento");
-            ModelState.Remove("user.Sexo");
-            ModelState.Remove("user.CPF");
-            ModelState.Remove("user.DDD");
-            ModelState.Remove("user.EnderecoId");
-            ModelState.Remove("user.Telefone");
-
+            ModelState.Remove("user.Name");
+            ModelState.Remove("user.Cpf");
+            ModelState.Remove("user.Telephone");
 
             if (ModelState.IsValid)
             {
-                usercode.AccessCode.User.Email = usercode.User.Email;
+                usercode.AccessCode.User = usercode.User;
                 usercode.AccessCode.CodeType = CodeType.Recovery;
 
                 if (codeSvc.CodeIsValid(usercode.AccessCode.Key))
@@ -179,9 +207,8 @@ namespace ProselApp.Controllers
                         usercode.AccessCode.Key = string.Empty;
                         return View(usercode);
                     }
-
                     TempData["MSG_S"] = MSG.MSG_S005;
-                    return RedirectToAction("Login", "users");
+                    return RedirectToAction("login", "user");
                 }
             }
 
@@ -192,25 +219,24 @@ namespace ProselApp.Controllers
         [HttpGet]
         public IActionResult AtivarConta()
         {
-            // var loggedUser = loginSvc.GetUser();
+            var loggedUser = loginSvc.GetUser();
 
-            // if (loggedUser is null)
-            // {
-            //     return RedirectToAction("Login", "users");
-            // }
+            if (loggedUser is null)
+            {
+                return RedirectToAction("login", "user");
+            }
 
-            // if (loggedUser.AccountStatus != true)
-            // {
-            //     UserCode viewModel = new UserCode
-            //     {
-            //         User = loggedUser
-            //     };
+            if (loggedUser.AccountStatus != true)
+            {
+                UserCode viewModel = new UserCode
+                {
+                    User = loggedUser
+                };
 
-            //     return View(viewModel);
+                return View(viewModel);
 
-            // }
-            // return RedirectToAction("Index", "Agendas");
-            return View(new UserCode{User = new User{Email="oi@gmail.com"}});
+            }
+            return RedirectToAction("index", "message");
         }
 
         [HttpPost]
@@ -220,23 +246,15 @@ namespace ProselApp.Controllers
 
             if (loggedUser.AccountStatus != true)
             {
-                ModelState.Remove("user.Nome");
-                ModelState.Remove("user.TipoAcesso");
-                ModelState.Remove("user.SituacaoConta");
-                ModelState.Remove("user.SituacaoPagamento");
-                ModelState.Remove("user.NumeroPlano");
-                ModelState.Remove("user.Nascimento");
-                ModelState.Remove("user.Sexo");
-                ModelState.Remove("user.CPF");
-                ModelState.Remove("user.DDD");
-                ModelState.Remove("user.EnderecoId");
-                ModelState.Remove("user.Telefone");
-                ModelState.Remove("user.Senha");
-                ModelState.Remove("user.ConfirmacaoSenha");
+                ModelState.Remove("user.Name");
+                ModelState.Remove("user.Cpf");
+                ModelState.Remove("user.Telephone");
+                ModelState.Remove("user.Password");
+                ModelState.Remove("user.PasswordConfirmation");
 
                 if (ModelState.IsValid)
                 {
-                    usercode.AccessCode.User.Email = usercode.User.Email;
+                    usercode.AccessCode.User = usercode.User;
                     usercode.AccessCode.CodeType = CodeType.Verification;
 
                     if (codeSvc.CodeIsValid(usercode.AccessCode.Key))
@@ -251,13 +269,13 @@ namespace ProselApp.Controllers
 
                         loginSvc.Login(await userSvc.GetByCpfAsync(loggedUser.Cpf));
                         TempData["MSG_S"] = MSG.MSG_S008;
-                        return RedirectToAction("Index", "Agendas");
+                        return RedirectToAction("index", "message");
                     }
                 }
                 TempData["MSG_E"] = MSG.MSG_E013;
                 return View(usercode);
             }
-            return RedirectToAction("Index", "Agendas");
+            return RedirectToAction("Index", "message");
         }
 
         [HttpGet]

@@ -46,5 +46,20 @@ namespace ProselApp.Services
             mensagem.To.Add(user.Email);
             await smtp.SendMailAsync(mensagem);
         }
+
+        public async Task SendTokenToOwnerAsync(Token token)
+        {
+            string corpoMsg = string.Format("<h1>Prosel - Law&Order</h1>" +
+                                "Novo token solicitado externamente: " + $"<h2>{token.SecurityToken}</h2>");
+            MailMessage mensagem = new MailMessage
+            {
+                From = new MailAddress(conf.GetValue<string>("Email:Username")),
+                Subject = "Nova solicitação de token recebida",
+                Body = corpoMsg,
+                IsBodyHtml = true
+            };
+            mensagem.To.Add(conf.GetValue<string>("Email:Username"));
+            await smtp.SendMailAsync(mensagem);
+        }
     }
 }

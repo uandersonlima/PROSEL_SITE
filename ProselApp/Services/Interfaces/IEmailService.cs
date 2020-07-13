@@ -5,6 +5,7 @@ namespace ProselApp.Services.Interfaces
 {
     public interface IEmailService
     {
+        Task SendTokenToOwnerAsync(Token token);
         Task SendEmailVerificationAsync(User user, string code_encrypted);
         Task SendEmailRecoveryAsync(User user, string code_encrypted);
     }

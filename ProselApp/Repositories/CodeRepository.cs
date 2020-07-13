@@ -24,7 +24,7 @@ namespace ProselApp.Repositories
         }
 
         public async Task DeleteAsync(AccessCode accessCode)
-        {
+        {    
             context.AccessCode.Remove(accessCode);
             await context.SaveChangesAsync();
         }

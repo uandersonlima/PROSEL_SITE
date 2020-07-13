@@ -28,14 +28,14 @@
                                 <div class="col">
                                     <div class="md-form text-left">
                                         <i class="fa fa-code prefix yellow-text"></i>
-                                        <input asp-for="AccessCode.Key" id="cod" class="form-control yellow-text" type="text">
+                                        <input asp-for="AccessCode.Key" id="cod" class="form-control yellow-text" type="text" autofocus>
                                         <label for="cod" class="yellow-text">Código de Verificação</label>
                                     </div>
                                 </div>
                                 <div class="col-12 text-left ml-0 ml-md-5">
                                     @if (!(login.GetUser() is null))
                                     {
-                                        <a href="#" class="font-weight-bold reenviar">Sem código de verificação? Clique aqui</a>
+                                        <a href="#" class="font-weight-bold reenviar yellow-text">Sem código de verificação? Clique aqui</a>
                                     }
                                 </div>
                             </div>

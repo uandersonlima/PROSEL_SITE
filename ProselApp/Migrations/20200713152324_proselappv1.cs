@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProselApp.Migrations
 {
-    public partial class ProselV1 : Migration
+    public partial class proselappv1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,6 +57,9 @@ namespace ProselApp.Migrations
                     Sender = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Telephone = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    TimeReceived = table.Column<DateTime>(nullable: false),
+                    ViewedTime = table.Column<DateTime>(nullable: true),
                     UserCpf = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -64,6 +67,29 @@ namespace ProselApp.Migrations
                     table.PrimaryKey("PK_Message", x => x.Messagecode);
                     table.ForeignKey(
                         name: "FK_Message_User_UserCpf",
+                        column: x => x.UserCpf,
+                        principalTable: "User",
+                        principalColumn: "Cpf",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Token",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SecurityToken = table.Column<string>(nullable: true),
+                    UserCpf = table.Column<string>(nullable: true),
+                    CreationDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    TokenExpiration = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Token", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Token_User_UserCpf",
                         column: x => x.UserCpf,
                         principalTable: "User",
                         principalColumn: "Cpf",
@@ -79,6 +105,11 @@ namespace ProselApp.Migrations
                 name: "IX_Message_UserCpf",
                 table: "Message",
                 column: "UserCpf");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Token_UserCpf",
+                table: "Token",
+                column: "UserCpf");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -88,6 +119,9 @@ namespace ProselApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Message");
+
+            migrationBuilder.DropTable(
+                name: "Token");
 
             migrationBuilder.DropTable(
                 name: "User");

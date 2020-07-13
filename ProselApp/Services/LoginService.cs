@@ -6,7 +6,7 @@ namespace ProselApp.Services
 {
     public class LoginService : ILoginService
     {
-        private readonly string Key = "SignIn.User";
+        private readonly string Key = "cf6cf0fcbde280ad01a1df9042ae0b0b";
         private readonly ISessionService session;
 
         public LoginService(ISessionService session)
