@@ -6,7 +6,7 @@ namespace ProselApp.Controllers
 {
     public class MessageController:Controller
     {
-        [UserAuthorization]
+        //[UserAuthorization]
         public IActionResult Index()
         {
             return View();

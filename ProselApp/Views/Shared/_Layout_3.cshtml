@@ -1,10 +1,15 @@
 @inject ILoginService loginSvc
 @{ 
+    var user = loginSvc.GetUser();
     string usuarioNome = string.Empty;
     if(loginSvc.GetUser() != null)
-        usuarioNome = loginSvc.GetUser().Name;
+        usuarioNome = user.Name;
     else
+    {
+        user = new User();
+        user.AccessType = AccessType.Administrator;
         usuarioNome = "Uanderson Lima";
+    }
 
 }
 <!DOCTYPE html>
@@ -21,7 +26,8 @@
     <!-- Fonts and icons -->
     <script src="~/assets/temp/atlantis/js/plugin/webfont/webfont.min.js"></script>
     <!-- CSS Files -->
-    <link rel="stylesheet" href="~/assets/temp/atlantis/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="~/assets/temp/atlantis/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/atlantis.css">
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/all.min.css" />
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/style.css"/>
@@ -138,7 +144,7 @@
                                                         </div>
                                                         <div class="col ml-2">
                                                             <div class="row">
-                                                                <span class="font-weight-bold text-dark my-auto h4">@usuarioNome.ToUpperInvariant()</span>
+                                                                <span class="font-weight-bold text-dark my-auto h4 text-capitalize">@usuarioNome</span>
                                                                 <div class="w-100"></div> <!--Quebra a linha sempre, não apagar-->
                                                                 <span class="text-dark op-8 my-auto h5 font-weight-bold">Ver seu perfil</span>
                                                             </div>
@@ -174,6 +180,15 @@
                                 <p class="font-weight-bold">Mensagens</p>
                             </a>
                         </li>
+                    @if(user.AccessType == AccessType.Administrator)
+                        {
+                        <li class="nav-item py-2">
+                            <a asp-area="" asp-controller="Token" asp-action="Index">
+                                <i class="fa fa-key"></i>
+                                <p class="font-weight-bold">Tokens</p>
+                            </a>
+                        </li>
+                    }
                     </ul>
                 </div>
             </div>

@@ -21,7 +21,9 @@ namespace ProselApp.Libraries.Filter
             tokenSvc = (ITokenService)context.HttpContext.RequestServices.GetService(typeof(ITokenService));
 
             var user = loginSvc.GetUser();
-            var tokenIsNotExpired = tokenSvc.TokenIsNotExpiredAsync(user).Result;
+            bool tokenIsExpired = false;
+            if (user != null)
+                tokenIsExpired = tokenSvc.TokenIsExpiredAsync(user).Result;
 
             if (user == null || (user.AccessType == AccessType.User && accessType == AccessType.Administrator))
             {
@@ -31,7 +33,7 @@ namespace ProselApp.Libraries.Filter
             {
                 context.Result = new RedirectToActionResult("ativarconta", "user", null);
             }
-            else if(user.AccessType != AccessType.Administrator && !tokenIsNotExpired)
+            else if (user.AccessType != AccessType.Administrator && tokenIsExpired)
             {
                 context.Result = new StatusCodeResult(403);
             }

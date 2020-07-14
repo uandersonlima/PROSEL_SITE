@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProselApp.Migrations
 {
-    public partial class proselappv1 : Migration
+    public partial class ProselAppV1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

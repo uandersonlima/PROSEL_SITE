@@ -16,7 +16,7 @@ namespace ProselApp.Services.Interfaces
         Task<Token> GetByIdAsync(int id);
         Task<Token> GetLastTokenAsync();
         Task<Token> GetTokenByUserAsync(User user);
-        Task<bool> TokenIsNotExpiredAsync(User user);
+        Task<bool> TokenIsExpiredAsync(User user);
         Task UpdateAsync(Token token);
 
     }

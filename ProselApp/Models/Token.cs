@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProselApp.Models
 {
@@ -7,6 +7,8 @@ namespace ProselApp.Models
     {
         public int Id { get; set; }
         public string SecurityToken { get; set; }
+        [ForeignKey("UserCpf")]
+        public string UserCpf { get; set; }
         public User User { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? UpdateDate { get; set; }

@@ -13199,7 +13199,7 @@ body {
         }
 
             body[data-background-color="dark"] .main-panel label {
-                color: #fff !important;
+                color: #fff;
             }
 
         body[data-background-color="dark"] .card, body[data-background-color="dark"] .row-card-no-pd, body[data-background-color="dark"] .list-group-item, body[data-background-color="dark"] .timeline > li > .timeline-panel {
@@ -13366,7 +13366,7 @@ body {
 }
 
 .bg-warning {
-    background-color: #FFAD46 !important;
+    background-color: #FFF159 !important;
 }
 
 .bg-warning2 {

@@ -84,7 +84,7 @@ namespace ProselApp.Services
             return await tokenRepos.GetTokenByUserAsync(user);
         }
 
-        public async Task<bool> TokenIsNotExpiredAsync(User user)
+        public async Task<bool> TokenIsExpiredAsync(User user)
         {
             var token = await GetTokenByUserAsync(user);
             return DateTime.Now < token.TokenExpiration;

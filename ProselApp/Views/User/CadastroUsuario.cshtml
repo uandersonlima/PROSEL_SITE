@@ -18,7 +18,7 @@
                     <a class="logo" asp-area="" asp-controller="User" asp-action="Index">
                         <img class="d-block mx-auto mb-4" src="~/assets/img/logo-prin.png" alt="" width="150">
                     </a>
-                    <input asp-for="Token.SecurityToken" id="ignore" hidden/>
+                    
                     <h1 class="yellow-text font-weight-bold">CADASTRO</h1>
                     <p class="yellow-text">Vamos iniciar sua experiência</p>
                     @{ await Html.RenderPartialAsync("~/Views/Shared/_Mensagem.cshtml"); }

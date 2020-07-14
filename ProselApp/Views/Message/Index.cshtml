@@ -1,9 +1,46 @@
+@model Message
 @{
     ViewData["Title"] = "Message Page";
     Layout="_Layout_3";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Sou barril</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-5">
+    <div class="card bg-white">
+        <div class="card-body py-0">                            
+            <div class="row"> 
+                <div class="form-group col-md">               
+                    <div class="custom-control custom-switch py-0">
+                        <input type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
+                        <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="customSwitches">Remetente: Uanderson Lima</label>
+                    </div>
+                </div>  
+                <div class="form-group col-md">
+                    <span class="text-dark font-weight-bold">Email: uandersonlimacs@gmail.com</span>
+                </div>    
+                <div class="form-group ml-auto col-6 col-md-2 text-right">
+                    <span class="text-dark font-weight-bold">Não lida</span>
+                     <span class="text-dark font-weight-bold">14:34</span>
+                </div>                    
+            </div>                 
+        </div>
+    </div>
+    <div class="card bg-light">
+        <div class="card-body py-0">                            
+            <div class="row"> 
+                <div class="form-group col-md">               
+                    <div class="custom-control custom-switch py-0">
+                        <input type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
+                        <label class="custom-control-label my-0 py-0 text-dark font-weight-normal" for="customSwitches">Remetente: Uanderson Lima</label>
+                    </div>
+                </div>  
+                <div class="form-group col-md">
+                    <span class="text-dark font-weight-normal">Email: uandersonlimacs@gmail.com</span>
+                </div>   
+                <div class="form-group ml-auto col-6 col-md-2 text-right">
+                    <span class="text-dark font-weight-normal">Lida às 14:42</span>
+                    <span class="text-dark font-weight-normal">14:34</span>
+                </div>                    
+            </div>                 
+        </div>
+    </div>    
 </div>

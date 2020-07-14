@@ -9,8 +9,8 @@ using ProselApp.Data;
 namespace ProselApp.Migrations
 {
     [DbContext(typeof(ProselAppContext))]
-    [Migration("20200713152324_proselappv1")]
-    partial class proselappv1
+    [Migration("20200713161307_ProselAppV1")]
+    partial class ProselAppV1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

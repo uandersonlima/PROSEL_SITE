@@ -9,7 +9,7 @@ using ProselApp.Models.Const;
 using ProselApp.Models.AcessCode;
 using System;
 using ProselApp.Models.ViewModel;
-using System.Globalization;
+
 
 namespace ProselApp.Controllers
 {
@@ -98,20 +98,6 @@ namespace ProselApp.Controllers
         {
             return RedirectToAction("cadastrousuario", "user", token);
         }
-        public async Task<IActionResult> GerarNovoToken()
-        {
-            var elapsedTime = await tokenSvc.ElapsedTimeLastTokenAsync();
-            var _1day = new TimeSpan(23, 59, 59);
-            TempData["MSG_A"] = string.Format(MSG.MSG_E016, _1day.Subtract(elapsedTime));
-
-            if (elapsedTime >= _1day)
-            {
-                TempData["MSG_A"] = null;
-                await tokenSvc.CreateNewKeyAsync();
-                TempData["MSG_S"] = MSG.MSG_S009;
-            }
-            return RedirectToAction("novousuario");
-        }
 
         [HttpGet, Route("Cadastro")]
         public async Task<IActionResult> CadastroUsuario(Token token)
@@ -132,7 +118,8 @@ namespace ProselApp.Controllers
             if (ModelState.IsValid)
             {
                 var token = await tokenSvc.GetByHashAsync(usertoken.Token.SecurityToken);
-                token.User = usertoken.User;
+                token.UserCpf = usertoken.User.Cpf;
+                await userSvc.AddAsync(usertoken.User);
                 await tokenSvc.UpdateAsync(token);
                 TempData["MSG_S"] = MSG.MSG_S006;
                 if (!(usertoken.User.Email.ToLower() == conf.GetValue<string>("Email:Username").ToLower()))
