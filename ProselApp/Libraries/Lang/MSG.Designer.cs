@@ -328,5 +328,12 @@ namespace ProselApp.Libraries.Lang
                 return ResourceManager.GetString("MSG_S009", resourceCulture);
             }
         }
+        public static string MSG_S010
+        {
+            get
+            {
+                return ResourceManager.GetString("MSG_S010", resourceCulture);
+            }
+        }
     }
 }

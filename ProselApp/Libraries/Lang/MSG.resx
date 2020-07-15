@@ -133,4 +133,7 @@
     <data name="MSG_S009" xml:space="preserve">
         <value>Token gerado com sucesso! Entre em contato com o proprietário do site.</value>
     </data>
+    <data name="MSG_S010" xml:space="preserve">
+        <value>Mensagem enviada com sucesso</value>
+    </data>
 </root>
