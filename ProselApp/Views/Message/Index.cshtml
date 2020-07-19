@@ -1,46 +1,373 @@
-@model Message
+@model List<Message>
 @{
     ViewData["Title"] = "Message Page";
     Layout="_Layout_3";
+    var todas = Model;
+    var lidas = new List<Message>();
+    var naolidas = new List<Message>();
+    if(todas != null)
+    {
+        todas.ForEach(msg => msg.Sender = msg.Sender.Count() <= 15 ? msg.Sender : string.Format(msg.Sender.Substring(0, 15)) + "...");
+        lidas =  todas.Where(msg => msg.ViewedTime.HasValue).ToList();
+        naolidas = todas.Where(msg => !msg.ViewedTime.HasValue).ToList();
+    }
 }
-
-<div class="container py-5">
-    <div class="card bg-white">
-        <div class="card-body py-0">                            
-            <div class="row"> 
-                <div class="form-group col-md">               
-                    <div class="custom-control custom-switch py-0">
-                        <input type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
-                        <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="customSwitches">Remetente: Uanderson Lima</label>
+@inject IMessageService msgSvc
+<style>
+.custom-control-input:checked~.custom-control-label::before {
+    color: #fff;
+    border-color: #212121;
+    background-color: #212121;
+}
+.bg-custom{
+    background: #fff159 !important;
+}
+.bg-custom:hover{
+    background: #fff159 !important;
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #212121;
+}
+i.fas{
+    position: relative;
+    z-index: 0;
+}
+i.fas:after{
+    content: '';
+    height: 0px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255,255,255,0.9);
+    width: 0px;
+    border-radius: 100%;
+    z-index: -1;
+    transition: all .3s;
+}
+i.fas:hover::after{
+width: 40px;
+height: 40px;
+}
+</style>
+<div class="panel-header">
+    <div class="page-inner ml-0 ml-md-5 py-0 py-sm-1 py-md-3 py-lg-4">
+        <div class="container-fluid align-items-center">
+            <div class="row ">
+                <div class="order-md-0 col-sm-5 col-md-6  col-lg-6 d-md-flex d-none">
+                    <div>
+                        <h1 class="text-white pb-2 fw-bold">Mensagens</h1>
+                        <h4 class="text-white op-8 mb-2 fw-bold">Veja a lista das suas mensagens.</h4>
                     </div>
-                </div>  
-                <div class="form-group col-md">
-                    <span class="text-dark font-weight-bold">Email: uandersonlimacs@gmail.com</span>
-                </div>    
-                <div class="form-group ml-auto col-6 col-md-2 text-right">
-                    <span class="text-dark font-weight-bold">Não lida</span>
-                     <span class="text-dark font-weight-bold">14:34</span>
-                </div>                    
-            </div>                 
+                </div>
+                <div class="order-md-1 col-md-4 d-flex align-items-center justify-content-center">
+                    <div class="form-group col-12">
+                        <div class="input-icon">
+                            <span class="input-icon-addon text-white">
+                                <i class="fa fa-search search-icon"></i>
+                            </span>
+                            <input type="text" id="pesquisa" class="form-control input-pill text-white border border-white font-weight-bold" placeholder="Digite Remetente ou Email">
+                        </div>
+                    </div>
+                </div>
+                <div class="order-md-2 btn-group order-md-2 col-md-2 d-flex align-items-center justify-content-md-start justify-content-end mr-md-0 mr-3">
+                    <div class="container d-flex d-sm-flex d-md-none justify-content-end">
+                        <div class="dropdown show">
+                            <select class="form-control form-control-sm" id="nav">
+                                <option value="todas">Todas</option>
+                                <option value="naolidas">Não Lidas</option>
+                                <option value="lidas">Lidas</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card bg-light">
-        <div class="card-body py-0">                            
-            <div class="row"> 
-                <div class="form-group col-md">               
-                    <div class="custom-control custom-switch py-0">
-                        <input type="checkbox" class="custom-control-input yellow-text" id="customSwitches">
-                        <label class="custom-control-label my-0 py-0 text-dark font-weight-normal" for="customSwitches">Remetente: Uanderson Lima</label>
-                    </div>
-                </div>  
-                <div class="form-group col-md">
-                    <span class="text-dark font-weight-normal">Email: uandersonlimacs@gmail.com</span>
-                </div>   
-                <div class="form-group ml-auto col-6 col-md-2 text-right">
-                    <span class="text-dark font-weight-normal">Lida às 14:42</span>
-                    <span class="text-dark font-weight-normal">14:34</span>
-                </div>                    
-            </div>                 
-        </div>
-    </div>    
 </div>
+<nav class="justify-content-center d-flex mb-4">
+    <ul class="nav nav-line nav-color-default col-12 col-md-10" id="nav-tab">
+        <li class="nav-item order-0 d-none d-md-block">
+            <a class="nav-link active text-white" id="todas" data-toggle="tab" href="#nav-todas">Todas</a>
+        </li>
+        <li class="nav-item order-2 d-none d-md-block">
+            <a class="nav-link text-white" id="lidas" data-toggle="tab" href="#nav-lidas" role="tab">Lidas</a>
+        </li>
+        <li class="nav-item order-1 d-none d-md-block">
+            <a class="nav-link text-white" id="naolidas" data-toggle="tab" href="#nav-naolidas" role="tab">Não Lidas</a>
+        </li>
+        <div class="ml-md-auto order-3 d-flex d-block align-items-center">
+            <a class="nav-link text-white" href="javascript:void(0)" onclick="apagarvarios()"><i class="fas fa-trash" data-toggle="tooltip" data-placement="bottom" title="Apagar todas mensagens marcadas"></i></a>
+            <a class="nav-link text-white" href="javascript:void(0)" onclick="marcarvariascomolida()"><i class="fas fa-envelope-open" data-toggle="tooltip" data-placement="bottom" title="Marcar como lidas todas mensagens marcadas"></i></a>
+        </div>
+    </ul>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+    <!--TODAS AS MENSAGENS-->
+    <div class="tab-pane active show" id="nav-todas" role="tabpanel" aria-labelledby="todas">
+        <div class="container-fluid col-md-11">
+        @if(todas.Count > 0){
+            @foreach (var item in todas)
+            {
+                @if(!item.ViewedTime.HasValue){
+                    @*Mensagens Não Lidas*@
+                    <div class="card bg-dark py-0 my-2">
+                        <div class="card-body py-0">                            
+                            <div class="row"> 
+                                <div class="form-group col-md-3">               
+                                    <div class="custom-control custom-checkbox py-0">
+                                        <input type="checkbox" class="custom-control-input msg" id="@string.Format("ln"+item.Messagecode)" value="@item.Messagecode">
+                                        <label class="custom-control-label my-0 py-0 text-white font-weight-bold" for="@string.Format("ln"+item.Messagecode)">@item.Sender</label>
+                                    </div>
+                                </div>  
+                                <div class="form-group col-md">
+                                   <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-white font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a> 
+                                </div>   
+                                <div class="form-group ml-auto col-6  col-md-4 text-right">
+                                    <div class="botoes" hidden>
+                                        <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
+                                            <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" onclick="marcarcomolida(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Marcar como lida">
+                                            <i class="fas fa-envelope-open mr-3 align-middle text-dark" style="font-size:18px;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="info">
+                                        <span class="text-white font-weight-bold align-middle">@item.TimeReceived.ToString("HH:mm dd.MM.yyyy")</span>                           
+                                        <span class="text-white font-weight-bold align-middle">Não lida</span>
+                                    </div>
+                                </div>                    
+                            </div>                 
+                        </div>
+                    </div>
+                }
+                else{
+                    @*Mensagens Lidas*@
+                    <div class="card bg-white py-0 my-2">
+                        <div class="card-body py-0">                            
+                            <div class="row"> 
+                                <div class="form-group col-md-3">               
+                                    <div class="custom-control custom-checkbox py-0">
+                                        <input type="checkbox" class="custom-control-input msg" id="@string.Format("ln"+item.Messagecode)" value="@item.Messagecode">
+                                        <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("ln"+item.Messagecode)">@item.Sender</label>
+                                    </div>
+                                </div>  
+                                <div class="form-group col-md">
+                                    <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-dark font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
+                                </div>   
+                                <div class="form-group ml-auto col-6 col-md-4 text-right">
+                                    <div class="botoes" hidden>
+                                        <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
+                                            <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" onclick="marcarcomolida(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Marcar como lida">
+                                            <i class="fas fa-envelope-open mr-3 align-middle text-dark" style="font-size:18px;"></i>
+                                        </a>
+                                    </div>
+                                    <div class="info">
+                                        <span class="text-dark font-weight-bold align-middle">@item.TimeReceived.ToString("HH:mm dd.MM.yyyy")</span>
+                                        <span class="text-dark font-weight-bold align-middle">Lida às @item.ViewedTime?.ToString("HH:mm dd.MM.yyyy")</span>     
+                                    </div>                                        
+                                </div>                    
+                            </div>                 
+                        </div>
+                    </div>  
+                }
+            }
+        }else{
+             <h1 class="mt-5 font-weight-bold text-center">Nenhuma mensagem</h1>
+        }
+        </div> 
+    </div> 
+    <!--SOMENTE AS MENSAGENS LIDAS-->
+    <div class="tab-pane fade" id="nav-lidas" role="tabpanel" aria-labelledby="lidas">
+        <div class="container-fluid col-md-11">
+        @if(lidas.Count > 0)
+        {
+            @foreach (var item in lidas)
+            {
+                <div class="card bg-white py-0 my-2">
+                    <div class="card-body py-0">                            
+                        <div class="row"> 
+                            <div class="form-group col-md-3">               
+                                <div class="custom-control custom-checkbox py-0">
+                                    <input type="checkbox" class="custom-control-input yellow-text msg" id="@string.Format("l"+item.Messagecode)" value="@item.Messagecode">
+                                    <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("l"+item.Messagecode)">@item.Sender</label>
+                                </div>
+                            </div>  
+                            <div class="form-group col-md">
+                                <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-dark font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
+                            </div>    
+                            <div class="form-group ml-auto col-6  col-md-4 text-right">
+                                <div class="botoes" hidden>
+                                    <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
+                                        <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="marcarcomolida(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Marcar como lida">
+                                        <i class="fas fa-envelope-open mr-3 align-middle text-dark" style="font-size:18px;"></i>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <span class="text-dark font-weight-bold align-middle">@item.TimeReceived.ToString("HH:mm dd.MM.yyyy")</span>
+                                    <span class="text-dark font-weight-bold align-middle">Lida às @item.ViewedTime?.ToString("HH:mm dd.MM.yyyy")</span>     
+                                </div>    
+                            </div>                    
+                        </div>                 
+                    </div>
+                </div>
+            }        
+        }else{
+            <h1 class="mt-5 font-weight-bold text-center">Nenhuma mensagem lida</h1>
+        }
+        </div> 
+    </div>
+    <!--SOMENTE AS MENSAGENS NÃO LIDAS-->
+    <div class="tab-pane fade" id="nav-naolidas" role="tabpanel" aria-labelledby="naolidas">
+        <div class="container-fluid col-md-11">
+        @if(naolidas.Count > 0)
+        {      
+            @foreach (var item in naolidas)
+            {
+                <div class="card bg-dark py-0 my-2">
+                    <div class="card-body py-0">                            
+                        <div class="row"> 
+                            <a href="#">
+                            <div class="form-group col-md-3">               
+                                <div class="custom-control custom-checkbox py-0">
+                                    <input type="checkbox" class="custom-control-input msg" id="@string.Format("n"+item.Messagecode)" value="@item.Messagecode">
+                                    <label class="custom-control-label my-0 py-0 text-white font-weight-bold" for="@string.Format("n"+item.Messagecode)">@item.Sender</label>
+                                </div>
+                            </div> 
+                            </a> 
+                            <div class="form-group col-md">
+                                <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-white font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
+                            </div>    
+                            <div class="form-group ml-auto col-6  col-md-4  text-right">
+                                <div class="botoes" hidden>
+                                    <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
+                                        <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" onclick="marcarcomolida(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Marcar como lida">
+                                        <i class="fas fa-envelope-open mr-3 align-middle text-dark" style="font-size:18px;"></i>
+                                    </a>
+                                </div>
+                                <div class="info">
+                                    <span class="text-white font-weight-bold align-middle">@item.TimeReceived.ToString("HH:mm dd.MM.yyyy")</span>                           
+                                    <span class="text-white font-weight-bold align-middle">Não lida</span>
+                                </div>
+                            </div>                    
+                        </div>                 
+                    </div>
+                </div>
+            }
+        }else{
+             <h1 class="mt-5 font-weight-bold text-center">Nenhuma mensagem não lida</h1>
+        }
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="Tmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-warning">
+            <div class="modal-body modal-dialog-scrollable">
+                <div id="modal" class="container-fluid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let checkboxs = [];
+    const checkboxHTML = document.querySelectorAll('input.msg');
+    checkboxHTML.forEach(input => input.addEventListener('change', function(){
+        let divcard = this.closest('div.card');
+        if(this.checked)
+        {
+            checkboxHTML.forEach(input => {          
+                            if(input.value == this.value)
+                            { 
+                            let divcard2 = input.closest('div.card');
+                            input.checked = true;
+                            divcard2.classList.add('bg-custom')
+                            }
+                        })
+            checkboxs.push(Number(this.value))
+            divcard.classList.add('bg-custom');
+        }        
+        else
+        {
+            checkboxHTML.forEach(input => {          
+                            if(input.value == this.value)
+                            { 
+                            let divcard2 = input.closest('div.card');
+                            input.checked = false;
+                            divcard2.classList.remove('bg-custom')
+                            }
+                        })
+            checkboxs.splice(checkboxs.indexOf(Number(this.value)),1)
+            divcard.classList.remove('bg-custom');
+        }
+            console.log(checkboxs)
+    }))
+    function apagar (code)
+    {
+        chamadaAjax(`/message/delete?messagecode=${code}`, 'GET');
+    }
+    function marcarcomolida (code)
+    {
+        chamadaAjax(`/message/markasread?messagecode=${code}`, 'GET');      
+    }
+    function marcarvariascomolida()
+    {
+        chamadaAjax(`/message/markmultiple`, 'GET', checkboxs);      
+    }
+    function apagarvarios()
+    {
+        chamadaAjax(`/message/deletemultiple`, 'GET', checkboxs);      
+    }
+    function chamadaAjax(url, type, data=null)
+    {
+        $.ajax({
+            type: type,
+            url: url,
+            async: true,
+            data:data,
+            contentType: 'application/json',
+            success: function (partial) {
+                $('#modal').html(partial);
+                $('#Tmodal').modal();
+            },
+            error: function (code) {
+                $('#modal').html(`<div class="text-center"><h4>Algo deu errado, o erro ${code.status} aconteceu, se o problema persistir entre em contato</h4>
+                <input type="button" class="btn btn-sm btn-outline-light text-muted font-weight-bold border-0" data-dismiss="modal" value="FECHAR" /></div>`);
+                $('#Tmodal').modal();
+            }
+        })
+    }
+    document.querySelector('select[id="nav"]').addEventListener('change', function(){
+        let select = document.querySelector(`li a#${this.value}`);
+            select.parentNode.parentNode.querySelector('.active').classList.remove('active');
+            select.classList.add('active');      
+        let tela = document.querySelector(`div${select.getAttribute('href')}`);
+            tela.parentNode.querySelector('.active.show').classList.remove('active','show');
+            tela.classList.add('active', 'show');
+    })
+    document.querySelector('input[id="pesquisa"]').addEventListener('keyup', function(e){
+        let key = e.which || e.keyCode;
+        if(key == 13)
+        {
+            if(this.value.length == 0)
+                window.location.replace("/Message");
+            else
+                window.location.href = "?pesquisa=" + this.value;
+        }
+    })
+    document.querySelectorAll('div.card').forEach( card => card.addEventListener("mouseenter", function(){
+        this.querySelector('div.info').hidden = true;
+        this.querySelector('div.botoes').hidden = false;
+    }))
+    document.querySelectorAll('div.card').forEach( card => card.addEventListener("mouseleave", function(){
+        this.querySelector('div.botoes').hidden = true;
+        this.querySelector('div.info').hidden = false;
+    }))
+</script>

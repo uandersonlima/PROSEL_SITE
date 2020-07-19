@@ -3368,6 +3368,10 @@ body {
         }
 
 /*     Card     */
+.card:hover{
+   color: #212121 !important;
+   background-color: rgba(255,255,255,0.5) !important;
+}
 .card, .card-light {
     border-radius: 5px;
     background-color: #ffffff;
@@ -3377,6 +3381,7 @@ body {
     box-shadow: 2px 6px 15px 0px rgba(69, 65, 78, 0.1);
     border: 0px;
 }
+
 
     .card .card-header, .card-light .card-header {
         padding: 1rem 1.25rem;
@@ -5824,8 +5829,8 @@ label.error {
     }
 
     .nav.nav-line.nav-color-default .nav-link.active {
-        color: #1a2035;
-        border-color: #1a2035;
+        color: #fff159 !important;
+        border-color: #fff159;
     }
 
     .nav.nav-line.nav-color-primary .nav-link:hover, .nav.nav-line.nav-color-primary .nav-link:focus {

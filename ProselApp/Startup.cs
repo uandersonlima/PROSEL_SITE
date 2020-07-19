@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProselApp.Services;
 using ProselApp.Services.IoC;
 
 namespace ProselApp
@@ -17,7 +18,6 @@ namespace ProselApp
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -55,12 +55,14 @@ namespace ProselApp
             app.UseSession();
             app.UseRouting();
             app.UseAuthorization();
-            
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=User}/{action=Index}/{id?}");
+                endpoints.MapHub<MsgHub>("/Msg");
             });
         }
     }

@@ -17,7 +17,7 @@ namespace ProselApp.Controllers
             this.tokenSvc = tokenSvc;
         }
 
-        [UserAuthorization(AccessType.Administrator)]
+        //[UserAuthorization(AccessType.Administrator)]
         public IActionResult Index()
         {
             return View();

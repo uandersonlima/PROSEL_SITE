@@ -1,4 +1,50 @@
+@model List<Token>
 @{
     ViewBag.Title = "Token Page";
     Layout="_Layout_3";
+}
+<h1>Tokens usados</h1>
+@foreach (var item in Model)
+{
+    @if(item.User == null)
+    {
+    <h1>Tokens usados</h1>
+    <div class="card bg-dark py-0 my-2">
+        <div class="card-body py-0">                            
+            <div class="row"> 
+                <div class="custom-control custom-checkbox py-0">
+                    <input type="checkbox" class="custom-control-input yellow-text msg" id="@string.Format("l"+@item.Id)" value="@item.Id">
+                    <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("l"+item.Id)">@item.SecurityToken</label>
+                </div>  
+                <div class="form-group col-md">
+                    <span class="text-dark font-weight-bold align-middle">@item.CreationDate</span>
+                    <span class="text-dark font-weight-bold align-middle">@item.UpdateDate</span>
+                    <span class="text-dark font-weight-bold align-middle">@item.TokenExpiration</span>
+                    <a class="nav-link text-warning py-0" href="javascript:void(0)">@item.User.Name</a>
+                </div> 
+            </div>
+        </div>                    
+    </div> 
+    }
+    else{
+    <h1>Tokens disponíveis</h1>   
+    <div class="card bg-white py-0 my-2">
+        <div class="card-body py-0">                            
+            <div class="row"> 
+                <div class="custom-control custom-checkbox py-0">
+                    <input type="checkbox" class="custom-control-input yellow-text msg" id="@string.Format("l"+@item.Id)" value="@item.Id">
+                    <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("l"+item.Id)">@item.SecurityToken</label>
+                </div>  
+                <div class="form-group col-md">
+                    <span class="text-dark font-weight-bold align-middle">@item.CreationDate</span>
+                    <span class="text-dark font-weight-bold align-middle">@item.UpdateDate</span>
+                    <span class="text-dark font-weight-bold align-middle">@item.TokenExpiration</span>
+                </div> 
+            </div>
+        </div>                    
+    </div> 
+    }               
+}
+@section Script{
+    
 }

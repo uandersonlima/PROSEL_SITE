@@ -29,31 +29,54 @@ var users = await userSvc.GetByPermission(AccessType.User);
 </header>
 <!-- About-->
 <section class="page-section bg-primary" id="about">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-lg-8 text-center">
+            <div class="col-md-12 text-center">
                 <h2 class="text-white mt-0">Nós somos o que você precisa</h2>
                 <hr class="divider light my-4" />
-                <p class="text-white-50 mb-4 text-justify">Missão – Prestar serviços jurídicos com
-                    excelência, oferecendo soluções inovadoras para obtenção de resultados expressivos que
-                    garantam a satisfação de seus clientes.</p>
-                <p class="text-white-50 mb-4 text-justify">Visão – Manter-se como referência nos segmentos
-                    em que atua, sendo sempre reconhecida pelos seus clientes como uma empresa moderna,
-                    inovadora e eficiente.</p>
-                <p class="text-white-50 mb-4 text-justify">
-                    Valores:
-                    <br>1. ExcelênciaPrestar serviços com eficiência e qualidade, superando as expectativas
-                    de cada um de seus clientes;
+                <div class="row justify-content-center mt-5">
+                    <div class="card col-10 col-md-3 my-md-0  order-0 text-dark" style="background: #fff159;">
+                        <div class="card-body align-middle">
+                            <i class="fas fa-5x fa-chart-line mb-4"></i>
+                            <h3 class="mb-2">Missão</h3>
+                            <p class="text-center mt-3">
+                            Prestar serviços jurídicos com
+                            excelência, oferecendo soluções inovadoras para obtenção de resultados expressivos que
+                            garantam a satisfação de seus clientes.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card col-10 col-md-3 my-md-0  order-2 text-dark" style="background: #fff159;">
+                        <div class="card-body align-middle">
+                            <i class="fas fa-5x fa fa-eye mb-4"></i>
+                            <h3 class="mb-2">Visão</h3>
+                            <p class="text-center mt-3">
+                            Manter-se como referência nos segmentos
+                            em que atua, sendo sempre reconhecida pelos seus clientes como uma empresa moderna,
+                            inovadora e eficiente.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card col-10 col-md-3 order-1 text-dark my-2 my-md-0 mx-md-2" style="background: #fff159;">
+                        <div class="card-body align-middle">
+                            <i class="fas fa-5x fa fa-handshake mb-4"></i>
+                            <h3 class="mb-2">Valores</h3>
+                            <p class="text-center mt-3">
+                                Excelência - Prestar serviços com eficiência e qualidade, superando as expectativas
+                                de cada um de seus clientes;
 
-                    <br>2. Integridade e Ética Atuar de forma integra e ética na condução dos negócios e na
-                    relação com seus colaboradores;
+                                Integridade e Ética - Atuar de forma integra e ética na condução dos negócios e na
+                                relação com seus colaboradores;
 
-                    <br>3. RespeitoInteragir com respeito nas relações pessoais e profissionais;
+                                Respeito - Interagir com respeito nas relações pessoais e profissionais;
 
-                    <br>4. Comprometimento Compromisso dos sócios e colaboradores com os objetivos da
-                    organização;
-                </p>
-                <a class="btn btn-primary btn-xl js-scroll-trigger" href="#services">Como funciona</a>
+                                Comprometimento - Compromisso dos sócios e colaboradores com os objetivos da
+                                organização;
+                            </p>
+                        </div>
+                    </div>              
+                </div>
+                <a class="btn btn-light btn-xl js-scroll-trigger mt-5" href="#services">Como funciona</a>
             </div>
         </div>
     </div>
@@ -199,6 +222,27 @@ var users = await userSvc.GetByPermission(AccessType.User);
                         }
                     </div>
                 </div>
+                <div class="row">
+                    <div class="mx-auto text-center mb-5 mb-lg-0">
+                        <i class="fab fa-facebook fa-3x mb-3 text-muted"></i>
+                        <div class="w-100"></div>
+                        <div><span class="text-dark">facebook.com/TecnoSystem<span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mx-auto text-center mb-5 mb-lg-0">
+                        <span class="fab fa-whatsapp fa-3x mb-3 text-muted"></span>
+                        <div class="w-100"></div>
+                        <div><span class="text-dark">(75) 99999-9999<span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mx-auto text-center mb-5 mb-lg-0">
+                        <span class="fab fa-instagram fa-3x mb-3 text-muted"></span>
+                        <div class="w-100"></div>
+                        <div><span class="text-dark">@string.Format("@tecnosystemej")<span></div>
+                    </div>
+                </div>                                                
             </div>
             <div class="col-md-6">
                 @*asp-action="Sender" asp-controller="Message"*@

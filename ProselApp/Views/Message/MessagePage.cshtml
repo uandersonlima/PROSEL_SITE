@@ -1,8 +1,19 @@
+@model Message
 @{
     Layout="_Layout_3";  
+    ViewBag.Title = "Mensagem " + @Model.Messagecode;
 }
-<div class="container">
-    <span class="display-4">
-        Olá eu sou o goku
-    </span>
+<div class="container pt-5 mt-5">
+    <div class="card bg-warning">
+        <div class="card-body text-dark px-5 pt-5">
+        <h2 class="text-left font-weight-bold"><span class="fa fa-user"></span> Remetente:</h2>
+        <h2 class="text-left font-weight-bold ml-5">@Model.Sender</h2>
+        <h2 class="text-left font-weight-bold"><span class="fa fa-envelope"></span> Email:</h2>
+        <h2 class="text-left font-weight-bold ml-5">@Model.Email</h2>
+        <h2 class="text-left font-weight-bold"><span class="fas fa-paper-plane"></span> Mensagem:</h2>
+        <h1 class="text-justify font-weight-bold mx-5">@Model.Description</h1>
+        <h5 class="text-right font-weight-bold" >@Model.TimeReceived.ToString("ddd, dd.MM HH:mm") <span class="fa fa-check" data-toggle="tooltip" data-placement="bottom" title="Horário recebido"></span></h5>
+        <h5 class="text-right font-weight-bold" >@Model.ViewedTime?.ToString("ddd, dd.MM HH:mm") <span class="fa fa-check-double" data-toggle="tooltip" data-placement="bottom" title="Horário de visualização"></span></h5>
+        </div>
+    </div>
 </div>

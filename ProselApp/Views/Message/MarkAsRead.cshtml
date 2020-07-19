@@ -1,0 +1,27 @@
+@model Message
+<h2 class="font-weight-bold text-dark text-center">
+    Marcar mensagem como lida
+</h2>
+<div class="text-center p-4">
+    <h1 class="fas fa-envelope-open text-dark display-1"></h1>
+</div>
+@if(Model.ViewedTime == null)
+{
+<div class="col-12 ml-auto mr-auto text-center" role="alert">
+    <h2 class="text-dark">Marcar mensagem de <strong>@Model.Sender</strong> como lida?</h2>
+</div>
+<form asp-action="MarkAsRead" class="mt-5 float-right">
+    <input type="hidden" asp-for="Messagecode" />
+    <input type="button" class="btn btn-sm btn-outline-light text-dark font-weight-bold border-0 mr-2" data-dismiss="modal" value="NÃO" />
+    <input type="submit" value="SIM" class="btn btn-dark btn-sm font-weight-bold" />
+</form>
+}
+else
+{
+<div class="col-12 ml-auto mr-auto text-center" role="alert">
+    <h2 class="text-dark">Essa mensagem de <strong>@Model.Sender</strong> já foi marcada como lida</h2>
+</div>    
+<div class="mt-5 float-right">
+    <input type="button" class="btn btn-sm btn-outline-light text-dark font-weight-bold border-0 mr-2" data-dismiss="modal" value="FECHAR" />
+</div>
+}

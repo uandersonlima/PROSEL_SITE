@@ -194,19 +194,19 @@ $(document).ready(function(){
 		if($('.wrapper').hasClass('sidebar_minimize')){
 			mini_sidebar = 1;
 			minibutton.addClass('toggled');
-			minibutton.html('<i class="icon-options-vertical text-primary"></i>');
+			minibutton.html('<i class="icon-options-vertical text-warning"></i>');
 		}
 
 		minibutton.on('click', function() {
 			if (mini_sidebar == 1) {
 				$('.wrapper').removeClass('sidebar_minimize');
 				minibutton.removeClass('toggled');
-				minibutton.html('<i class="icon-menu text-primary"></i>');
+				minibutton.html('<i class="icon-menu text-warning"></i>');
 				mini_sidebar = 0;
 			} else {
 				$('.wrapper').addClass('sidebar_minimize');
 				minibutton.addClass('toggled');
-				minibutton.html('<i class="icon-options-vertical text-primary"></i>');
+				minibutton.html('<i class="icon-options-vertical text-warning"></i>');
 				mini_sidebar = 1;
 			}
 			$(window).resize();
@@ -245,19 +245,19 @@ $(document).ready(function(){
 		if($('.wrapper').hasClass('is-show')){
 			overlay_sidebar_open = 1;
 			overlaybutton.addClass('toggled');
-			overlaybutton.html('<i class="icon-options-vertical text-primary"></i>');
+			overlaybutton.html('<i class="icon-options-vertical text-warning"></i>');
 		}
 
 		overlaybutton.on('click', function() {
 			if (overlay_sidebar_open == 1) {
 				$('.wrapper').removeClass('is-show');
 				overlaybutton.removeClass('toggled');
-				overlaybutton.html('<i class="icon-menu text-primary"></i>');
+				overlaybutton.html('<i class="icon-menu text-warning"></i>');
 				overlay_sidebar_open = 0;
 			} else {
 				$('.wrapper').addClass('is-show');
 				overlaybutton.addClass('toggled');
-				overlaybutton.html('<i class="icon-options-vertical text-primary"></i>');
+				overlaybutton.html('<i class="icon-options-vertical text-warning"></i>');
 				overlay_sidebar_open = 1;
 			}
 			$(window).resize();

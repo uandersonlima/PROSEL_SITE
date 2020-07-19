@@ -17,7 +17,7 @@ namespace ProselApp.Services.IoC
         {
             svc.AddControllersWithViews().AddNewtonsoftJson(opt => { opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; });
             svc.AddHttpContextAccessor();
-
+            svc.AddSignalR();
             //Email - Gerenciamento
             svc.AddScoped<SmtpClient>(options =>
             {

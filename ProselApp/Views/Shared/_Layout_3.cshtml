@@ -1,5 +1,7 @@
 @inject ILoginService loginSvc
+@inject IMessageService msgSvc
 @{ 
+    var novasMsgs = msgSvc.GetAllAsync(null).Result.Count(obj => obj.ViewedTime == null);
     var user = loginSvc.GetUser();
     string usuarioNome = string.Empty;
     if(loginSvc.GetUser() != null)
@@ -16,12 +18,10 @@
 <html lang="pt-br">
 <head>
     <title>@ViewData["Title"]</title>
-    <link rel="icon" href="~/assets/img/logo-title.png" type="image/x-icon" />
+    <link rel="icon" href="~/assets/img/ug-black.png" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta charset="utf-8" />
-
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <!-- Fonts and icons -->
     <script src="~/assets/temp/atlantis/js/plugin/webfont/webfont.min.js"></script>
@@ -31,20 +31,29 @@
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/atlantis.css">
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/all.min.css" />
     <link rel="stylesheet" href="~/assets/temp/atlantis/css/style.css"/>
+
+    <script>
+		WebFont.load({
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/temp/atlantis/css/fonts.min.css']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
 </head>
 <body data-background-color="dark">
     <div class="wrapper sidebar_minimize">
         <div class="main-header">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-                <button class="topbar-toggler more"><i class="icon-options-vertical text-primary"></i></button>
+                <button class="topbar-toggler more"><i class="icon-options-vertical text-warning"></i></button>
                 <div class="nav-toggle">
                     <button class="btn btn-toggle toggle-sidebar">
-                        <i class="icon-menu text-primary"></i>
+                        <i class="icon-menu text-warning"></i>
                     </button>
                 </div>
                 <a class="logo" asp-area="" asp-controller="message" asp-action="Index">
-                    <img src="~/assets/img/Logo-prin.png" width="120" alt="navbar brand" class="navbar-brand">
+                    <img src="~/assets/img/ug-white home.png" width="120" alt="navbar brand" class="navbar-brand">
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
@@ -60,7 +69,10 @@
                         <li class="nav-item dropdown hidden-caret mr-5">
                             <a class="nav-link dropdown-toggle" href="#" id="notifications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell text-warning" style="font-size:24px"></i>
-                                <span class="notification text-white font-weight-bold">4</span>
+                                @if(novasMsgs > 0)
+                                {
+                                    <span class="notification text-white font-weight-bold">@novasMsgs</span>
+                                }
                             </a>
                             <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="notifications" style="background-color: #fff159;">
                                 <li>
@@ -176,7 +188,7 @@
                     <ul class="nav">
                         <li class="nav-item py-2">
                             <a asp-area="" asp-controller="Message" asp-action="Index">
-                                <i class="fa fa-envelope"></i>
+                                <i class="fas fa-envelope"></i>
                                 <p class="font-weight-bold">Mensagens</p>
                             </a>
                         </li>
@@ -184,11 +196,11 @@
                         {
                         <li class="nav-item py-2">
                             <a asp-area="" asp-controller="Token" asp-action="Index">
-                                <i class="fa fa-key"></i>
+                                <i class="fas fa-key"></i>
                                 <p class="font-weight-bold">Tokens</p>
                             </a>
                         </li>
-                    }
+                        }
                     </ul>
                 </div>
             </div>
@@ -265,7 +277,7 @@
             var url = window.location
             $('.sidebar-content .nav').find('.active').removeClass('active')
             $('.sidebar-content .nav li a').each(function () {
-                if (url.href.includes(this.href)) {
+                if (url.href.toLowerCase().includes(this.href.toLowerCase())) {
                     $(this).parent().addClass('active')
                 }
             })
