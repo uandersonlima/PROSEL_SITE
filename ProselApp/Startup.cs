@@ -62,7 +62,7 @@ namespace ProselApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=User}/{action=Index}/{id?}");
-                endpoints.MapHub<MsgHub>("/Msg");
+                endpoints.MapHub<MyHub>("/Msg");
             });
         }
     }
