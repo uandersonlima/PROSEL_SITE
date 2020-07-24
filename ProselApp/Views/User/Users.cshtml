@@ -1,0 +1,58 @@
+@model List<User>
+@{
+    ViewBag.Title = "Users Page";
+    Layout="_Layout_3";
+}
+<link href="~/assets/css/custom.css" rel="stylesheet"/>
+<div class="panel-header">
+    <div class="page-inner ml-0 ml-md-5 py-0 py-sm-1 py-md-3 py-lg-4">
+        <div class="container-fluid align-users-center">
+            <div class="row ">
+                <div class="order-md-0 col-sm-5 col-md-6  col-lg-6 d-md-flex d-none">
+                    <div>
+                        <h1 class="text-white pb-2 fw-bold">Usuários</h1>
+                        <h4 class="text-white op-8 mb-2 fw-bold">Veja todos os usuários do sistema.</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid col-md-11 py-3">
+@if(Model.Count > 0)
+{
+    @foreach (var user in Model)
+    {
+        <div class="card bg-dark py-0 my-2">
+            <div class="card-body py-0">                            
+                <div class="row"> 
+                    <div class="form-group col-md-3">
+                        <span class="text-white font-weight-bold align-middle">Key: @user.Name</span>
+                    </div>
+                    <div class="form-group col-md">
+                        <span class="text-white font-weight-bold align-middle mr-md-4">Cpf: @user.Cpf</span>
+                    </div> 
+                    <div class="form-group ml-auto col-6  col-md-3 text-right">
+                        <a href="javascript:void(0)" onclick="apagar(@user.Cpf)" data-toggle="tooltip" data-placement="bottom" title="Apagar usuário">
+                            <i class="fas fa-trash mr-4 align-middle text-white" style="font-size:18px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>                    
+        </div> 
+    }            
+
+}else{
+        <h1 class="mt-5 font-weight-bold text-center">Nenhum usuário além de você</h1>
+}
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="Tmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-warning">
+            <div class="modal-body modal-dialog-scrollable">
+                <div id="modal" class="container-fluid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/user.js"></script>

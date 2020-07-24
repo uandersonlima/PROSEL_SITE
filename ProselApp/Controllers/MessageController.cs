@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using ProselApp.Libraries.Lang;
 using ProselApp.Models;
+using ProselApp.Services;
 using ProselApp.Services.Interfaces;
 
 namespace ProselApp.Controllers
@@ -12,26 +14,29 @@ namespace ProselApp.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageService msgSvc;
-        public MessageController(IMessageService msgSvc)
+        private readonly IHubContext<MsgHub> msgHubContext;
+        public MessageController(IMessageService msgSvc, IHubContext<MsgHub> msgHubContext)
         {
             this.msgSvc = msgSvc;
+            this.msgHubContext = msgHubContext;
         }
 
         //[UserAuthorization]
         public async Task<IActionResult> Index(string pesquisa)
         {
-            return View(await msgSvc.GetAllAsync(pesquisa));
+            var msgs = await msgSvc.GetAllAsync(pesquisa);
+            return View(msgs.Where(msg => !msg.isDeleted).ToList());
         }
 
         [HttpGet]
         public async Task<IActionResult> MessagePage(int? messagecode)
         {
-            if(!messagecode.HasValue)
+            if (!messagecode.HasValue)
             {
                 return NotFound();
             }
             var msg = await msgSvc.GetByCodeAsync(messagecode.Value);
-            if(msg.ViewedTime == null)
+            if (msg.ViewedTime == null)
             {
                 msg.ViewedTime = DateTime.Now;
                 await msgSvc.UpdateMsgAsync(msg);
@@ -56,7 +61,7 @@ namespace ProselApp.Controllers
         public async Task<IActionResult> Delete(int messagecode)
         {
             var msg = await msgSvc.GetByCodeAsync(messagecode);
-            await msgSvc.DeleteAsync(msg);
+            await msgSvc.LogicallyDeleteAsync(msg);
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
@@ -82,7 +87,112 @@ namespace ProselApp.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteMultiple(List<int> messagecodes)
+        public async Task<JsonResult> DeleteMultiple(List<int> messagecodes)
+        {
+            var msgs = new List<Message>();
+            if (messagecodes.Count != 0)
+            {
+                msgs = await msgSvc.GetMultipleMsgsAsync(messagecodes);
+                await msgSvc.LogicallyDeleteMultipleAsync(msgs);
+            }
+            return Json("/Message");
+        }
+        [HttpPost]
+        public async Task<JsonResult> MarkMultiple(List<int> messagecodes)
+        {
+            var msgs = new List<Message>();
+            if (messagecodes.Count != 0)
+            {
+                msgs = await msgSvc.GetMultipleMsgsAsync(messagecodes);
+                msgs.ForEach(msg => { if (msg.ViewedTime == null) { msg.ViewedTime = DateTime.Now; } });
+                await msgSvc.UpdateMultipleMsgsAsync(msgs);
+            }
+            return Json("/Message");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Sender(Message message)
+        {
+            var hub = new MsgHub();
+            if (ModelState.IsValid)
+            {
+                TempData["MSG_S"] = MSG.MSG_S010;
+                await msgSvc.AddAsync(message);
+                hub.Notify();
+                msgHubContext.Clients.All.SendAsync("newMsg");
+                return LocalRedirect("/#contact");
+            }
+            return LocalRedirect("/#contact");
+        }
+
+        [HttpGet, Route("Trash")]
+        public async Task<IActionResult> Trash(string pesquisa)
+        {
+            var msgs = await msgSvc.GetAllAsync(pesquisa);
+            return View(msgs.Where(msg => msg.isDeleted).ToList());
+        }
+        [HttpGet]
+        public async Task<IActionResult> RestoreMessage(int? messagecode)
+        {
+            if (!messagecode.HasValue)
+            {
+                return NotFound();
+            }
+            var msg = await msgSvc.GetByCodeAsync(messagecode.Value);
+            if (msg == null)
+            {
+                return NotFound();
+            }
+            msg.isDeleted = false;
+            await msgSvc.UpdateMsgAsync(msg);
+
+            return RedirectToAction("Trash", new { });
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteTrash(int? messagecode)
+        {
+            if (!messagecode.HasValue)
+            {
+                return NotFound();
+            }
+            var msg = await msgSvc.GetByCodeAsync(messagecode.Value);
+            if (msg == null)
+            {
+                return NotFound();
+            }
+            return PartialView(msg);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTrash(int messagecode)
+        {
+            var msg = await msgSvc.GetByCodeAsync(messagecode);
+            await msgSvc.DeleteAsync(msg);
+            return RedirectToAction(nameof(Trash));
+        }
+        [HttpGet]
+        public async Task<IActionResult> MarkAsReadTrash(int? messagecode)
+        {
+            if (!messagecode.HasValue)
+            {
+                return NotFound();
+            }
+            var msg = await msgSvc.GetByCodeAsync(messagecode.Value);
+            if (msg == null)
+            {
+                return NotFound();
+            }
+            return PartialView(msg);
+        }
+        [HttpPost]
+        public async Task<IActionResult> MarkAsReadTrash(int messagecode)
+        {
+            var msg = await msgSvc.GetByCodeAsync(messagecode);
+            msg.ViewedTime = DateTime.Now;
+            await msgSvc.UpdateMsgAsync(msg);
+            return RedirectToAction(nameof(Trash));
+        }
+        [HttpPost]
+        public async Task<JsonResult> DeleteMultipleTrash(List<int> messagecodes)
         {
             var msgs = new List<Message>();
             if (messagecodes.Count != 0)
@@ -90,30 +200,36 @@ namespace ProselApp.Controllers
                 msgs = await msgSvc.GetMultipleMsgsAsync(messagecodes);
                 await msgSvc.DeleteMultipleAsync(msgs);
             }
-            return RedirectToAction(nameof(Index));
+            return Json("/Trash");
         }
         [HttpPost]
-        public async Task<IActionResult> MarkMultiple(List<int> messagecodes)
+        public async Task<JsonResult> MarkMultipleTrash(List<int> messagecodes)
         {
             var msgs = new List<Message>();
             if (messagecodes.Count != 0)
             {
                 msgs = await msgSvc.GetMultipleMsgsAsync(messagecodes);
-                msgs.ForEach(msg => {msg.ViewedTime = DateTime.Now;});
+                msgs.ForEach(msg => { if (msg.ViewedTime == null) { msg.ViewedTime = DateTime.Now; } });
                 await msgSvc.UpdateMultipleMsgsAsync(msgs);
             }
-            return PartialView(msgs);
+            return Json("/Trash");
         }
-        [HttpPost]
-        public async Task<IActionResult> Sender(Message message)
+
+        [HttpGet, Route("Trash/Message")]
+        public async Task<IActionResult> MessagePageTrash(int? messagecode)
         {
-            if (ModelState.IsValid)
+            if (!messagecode.HasValue)
             {
-                TempData["MSG_S"] = MSG.MSG_S010;
-                await msgSvc.AddAsync(message);
-                return LocalRedirect("/#contact");
+                return NotFound();
             }
-            return LocalRedirect("/#contact");
+            var msg = await msgSvc.GetByCodeAsync(messagecode.Value);
+            if (msg.ViewedTime == null)
+            {
+                msg.ViewedTime = DateTime.Now;
+                await msgSvc.UpdateMsgAsync(msg);
+            }
+            return View(msg);
         }
+
     }
 }

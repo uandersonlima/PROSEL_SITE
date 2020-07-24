@@ -1,0 +1,15 @@
+@model User
+<h2 class="font-weight-bold text-dark text-center">
+    Apagar Usuário
+</h2>
+<div class="text-center p-4">
+    <h1 class="fa fa-trash-alt text-dark display-1"></h1>
+</div>
+<div class="col-12 ml-auto mr-auto text-center" role="alert">
+    <h2 class="text-dark">O usuário portador do CPF <strong>@Model.Cpf</strong> será removido do sistema. Deseja continuar?</h2>
+</div>
+<form asp-action="DeleteToken" class="mt-5 float-right">
+    <input type="hidden" asp-for="Cpf" />
+    <input type="button" class="btn btn-sm btn-outline-light text-dark font-weight-bold border-0 mr-2" data-dismiss="modal" value="DESISTIR" />
+    <input type="submit" value="APAGAR" class="btn btn-dark btn-sm font-weight-bold" />
+</form>

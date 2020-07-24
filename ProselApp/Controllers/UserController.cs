@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProselApp.Models;
@@ -298,14 +297,40 @@ namespace ProselApp.Controllers
             loginSvc.Logout();
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Privacy()
+
+        [HttpGet]
+        public async Task<IActionResult> Users()
         {
-            return View();
+            return View(await userSvc.GetAllUserAsync());
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string cpf)
+        {
+            if (string.IsNullOrEmpty(cpf))
+            {
+                return NotFound();
+            }
+            var user = await userSvc.GetByCpfAsync(cpf);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return PartialView(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(string cpf)
+        {
+            if (string.IsNullOrEmpty(cpf))
+            {
+                return NotFound();
+            }
+            var user = await userSvc.GetByCpfAsync(cpf);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return PartialView(user);
         }
 
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

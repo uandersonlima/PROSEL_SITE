@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,11 @@ namespace ProselApp.Repositories
         {
             context.Token.Remove(token);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<Token>> GetAllTokens()
+        {
+            return await context.Token.Include(token => token.User).ToListAsync();
         }
 
         public async Task<Token> GetByHashAsync(string hash)

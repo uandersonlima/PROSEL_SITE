@@ -2,49 +2,102 @@
 @{
     ViewBag.Title = "Token Page";
     Layout="_Layout_3";
+    var available = 0;
+    var unavailable = 0;
 }
-<h1>Tokens usados</h1>
+<link href="~/assets/css/custom.css" rel="stylesheet"/>
+<div class="panel-header">
+    <div class="page-inner ml-0 ml-md-5 py-0 py-sm-1 py-md-3 py-lg-4">
+        <div class="container-fluid align-items-center">
+            <div class="row ">
+                <div class="order-md-0 col-sm-5 col-md-6  col-lg-6 d-md-flex d-none">
+                    <div>
+                        <h1 class="text-white pb-2 fw-bold">Tokens</h1>
+                        <h4 class="text-white op-8 mb-2 fw-bold">Veja todos os tokens do sistema.</h4>
+                    </div>
+                </div>
+                <div class="order-md-1 col-sm-5 d-flex align-items-center justify-content-end mr-md-0 mr-3">
+                    <a type="button" onclick="CriarNovoToken()" class="btn btn-warning btn-rounded text-dark font-weight-bold float-right">Gerar novo token<i class="fa fa-key"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid col-md-11 py-3">
 @foreach (var item in Model)
 {
-    @if(item.User == null)
+    @if(item.User != null)
     {
-    <h1>Tokens usados</h1>
-    <div class="card bg-dark py-0 my-2">
-        <div class="card-body py-0">                            
-            <div class="row"> 
-                <div class="custom-control custom-checkbox py-0">
-                    <input type="checkbox" class="custom-control-input yellow-text msg" id="@string.Format("l"+@item.Id)" value="@item.Id">
-                    <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("l"+item.Id)">@item.SecurityToken</label>
-                </div>  
-                <div class="form-group col-md">
-                    <span class="text-dark font-weight-bold align-middle">@item.CreationDate</span>
-                    <span class="text-dark font-weight-bold align-middle">@item.UpdateDate</span>
-                    <span class="text-dark font-weight-bold align-middle">@item.TokenExpiration</span>
-                    <a class="nav-link text-warning py-0" href="javascript:void(0)">@item.User.Name</a>
-                </div> 
-            </div>
-        </div>                    
-    </div> 
+        if(available == 0)
+        {
+            <h1 class="mt-3">Tokens usados</h1>
+            ++available;
+        } 
+        <div class="card bg-dark py-0 my-2">
+            <div class="card-body py-0">                            
+                <div class="row"> 
+                    <div class="form-group col-md-3">
+                           <span class="text-white font-weight-bold align-middle">Key: @item.SecurityToken</span>
+                    </div>
+                    <div class="form-group col-md">
+                        <span class="text-white font-weight-bold align-middle mr-md-4">Criado em @item.CreationDate.ToString("ddd, dd.MM.yyyy") às @item.CreationDate.ToString("HH:mm")</span>
+                        @if(item.UpdateDate.HasValue)
+                        {
+                        <span class="text-white font-weight-bold align-middle mr-md-4">Atualizado em @item.UpdateDate?.ToString("ddd, dd.MM.yyyy") às @item.UpdateDate?.ToString("HH:mm")</span>
+                        }
+                        <span class="text-white font-weight-bold align-middle">Expira em @item.TokenExpiration.ToString("ddd, dd.MM.yyyy") às @item.TokenExpiration.ToString("HH:mm")</span>
+                        <a class="nav-link text-warning py-0" href="javascript:void(0)">@item.User.Name</a>
+                    </div> 
+                    <div class="form-group ml-auto col-6  col-md-3 text-right">
+                        <a href="javascript:void(0)" onclick="apagar(@item.Id)" data-toggle="tooltip" data-placement="bottom" title="Apagar token">
+                            <i class="fas fa-trash mr-4 align-middle text-white" style="font-size:18px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>                    
+        </div> 
     }
     else{
-    <h1>Tokens disponíveis</h1>   
-    <div class="card bg-white py-0 my-2">
-        <div class="card-body py-0">                            
-            <div class="row"> 
-                <div class="custom-control custom-checkbox py-0">
-                    <input type="checkbox" class="custom-control-input yellow-text msg" id="@string.Format("l"+@item.Id)" value="@item.Id">
-                    <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("l"+item.Id)">@item.SecurityToken</label>
-                </div>  
-                <div class="form-group col-md">
-                    <span class="text-dark font-weight-bold align-middle">@item.CreationDate</span>
-                    <span class="text-dark font-weight-bold align-middle">@item.UpdateDate</span>
-                    <span class="text-dark font-weight-bold align-middle">@item.TokenExpiration</span>
-                </div> 
-            </div>
-        </div>                    
-    </div> 
+        if(unavailable == 0)
+        {
+            <h1 class="mt-3">Tokens disponíveis</h1>
+            ++unavailable;
+        }
+        <div class="card bg-warning py-0 my-2">
+            <div class="card-body py-0">                            
+                <div class="row"> 
+                    <div class="form-group col-md-3">
+                           <span class="text-dark font-weight-bold align-middle">Key: @item.SecurityToken</span>
+                    </div>
+                    <div class="form-group col-md">
+                        <span class="text-dark font-weight-bold align-middle mr-md-4">Criado em @item.CreationDate.ToString("ddd, dd.MM.yyyy") às @item.CreationDate.ToString("HH:mm")</span>
+                        @if(item.UpdateDate.HasValue)
+                        {
+                        <span class="text-dark font-weight-bold align-middle mr-md-4">Atualizado em @item.UpdateDate?.ToString("ddd, dd.MM.yyyy") às @item.UpdateDate?.ToString("HH:mm")</span>
+                        }
+                        <span class="text-dark font-weight-bold align-middle">Expira em @item.TokenExpiration.ToString("ddd, dd.MM.yyyy") às @item.TokenExpiration.ToString("HH:mm")</span>
+                    </div> 
+                    <div class="form-group ml-auto col-6  col-md-3 text-right">
+                        <a href="javascript:void(0)" onclick="edit(@item.Id)" data-toggle="tooltip" data-placement="bottom" title="Editar token">
+                            <i class="fas fa-edit mr-3 align-middle text-dark" style="font-size:18px;"></i>
+                        </a>
+                        <a href="javascript:void(0)" onclick="apagar(@item.Id)" data-toggle="tooltip" data-placement="bottom" title="Apagar token">
+                            <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>                    
+        </div> 
     }               
 }
-@section Script{
-    
-}
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="Tmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content bg-warning">
+            <div class="modal-body modal-dialog-scrollable">
+                <div id="modal" class="container-fluid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/assets/js/token.js"></script>

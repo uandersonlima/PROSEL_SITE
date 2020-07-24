@@ -7,32 +7,29 @@
     <div class="row">
         <div class="col-md-10 ml-auto mr-auto">
             <div class="col-12 pt-4 pb-4">
-                <span class="h1 text-dark font-weight-bold">Meu Perfil</span>
-                <div class="float-right">
-                    <a class="btn btn-rounded btn-danger text-white border-0 font-weight-bold CancelarPagamento">Cancelar Assinatura</a>
-                </div>
+                <span class="h1 text-white font-weight-bold">Meu Perfil</span>
             </div>
-            <div class="card shadow-sm col-12" style="border-radius:10px">
+            <div class="card bg-dark shadow-sm col-12" style="border-radius:10px">
                 <div class="card-body">
                     <div class="col form-group">
                         <form asp-action="myprofile" asp-controller="user" method="post">
                             <input type="hidden" asp-for="Cpf" />
                             <div class="form-row">
                                 <div class="col-md-8 col-sm-8 col-lg-8 form-group">
-                                    <label asp-for="Name" class="text danger">Nome</label>
+                                    <label asp-for="Name" class="text-white">Nome</label>
                                     <input type="text" asp-for="Name" class="form-control" placeholder="">
                                     <span asp-validation-for="Name" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col-md-4 form-group">
-                                    <label asp-for="Telephone">Telefone</label>
+                                    <label asp-for="Telephone" class="text-white">Telefone</label>
                                     <input asp-for="Telephone" class="form-control tel">
                                     <span asp-validation-for="Telephone" class="text-danger"></span>
                                 </div>
                                 <div class="col form-group">
-                                    <label asp-for="Email">E-mail</label>
-                                    <input type="text" asp-for="Email" class="form-control" placeholder="" readonly="readonly">
+                                    <label asp-for="Email" class="text-white">E-mail</label>
+                                    <input type="text" asp-for="Email" class="form-control" placeholder="" readonly>
                                     <span asp-validation-for="Email" class="text-danger"></span>
                                     @if (ViewData["AlreadyExists"] != null)
                                     {
@@ -42,10 +39,10 @@
                             </div>
                             <div class="row align-items-center">
                                 <div class="mr-auto">
-                                    <a href="javascript:void(0) font-weight-bold">Alterar senha?</a>
+                                    <a href="javascript:void(0)" class="nav-link p-0 text-warning font-weight-bold">Alterar senha?</a>
                                 </div>
                                 <div class="ml-auto">
-                                    <input type="submit" class="btn btn-rounded btn-primary text-white font-weight-bold border-0" value="Salvar" />
+                                    <input type="submit" class="btn btn-rounded btn-warning text-dark font-weight-bold border-0" value="Salvar" />
                                 </div>
                             </div>
                         </form>

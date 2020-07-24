@@ -72,6 +72,9 @@ namespace ProselApp.Migrations
                     b.Property<DateTime?>("ViewedTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Messagecode");
 
                     b.HasIndex("UserCpf");

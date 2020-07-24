@@ -20,6 +20,7 @@ namespace ProselApp.Services.Interfaces
         Task<User> GetByCpfAsync(string cpf);
         List<User> GetUserByEmail(string email);
         Task<User> GetUserByLogin(string email, string senha);
+        Task<List<User>> GetAllUserAsync();
         Task<int> NumberOfUserWithADM();
         int NumberOfUserWithoutADM();
         Task UpdateAsync(User entity);

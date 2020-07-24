@@ -9,8 +9,8 @@ using ProselApp.Data;
 namespace ProselApp.Migrations
 {
     [DbContext(typeof(ProselAppContext))]
-    [Migration("20200713161307_ProselAppV1")]
-    partial class ProselAppV1
+    [Migration("20200723160005_ProselAppV3")]
+    partial class ProselAppV3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,6 +73,9 @@ namespace ProselApp.Migrations
 
                     b.Property<DateTime?>("ViewedTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("isDeleted")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Messagecode");
 

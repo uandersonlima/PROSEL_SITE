@@ -50,8 +50,9 @@ namespace ProselApp
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
             app.UseSession();
             app.UseRouting();
             app.UseAuthorization();
@@ -62,7 +63,7 @@ namespace ProselApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=User}/{action=Index}/{id?}");
-                endpoints.MapHub<MyHub>("/Msg");
+                endpoints.MapHub<MsgHub>("/Msg");
             });
         }
     }

@@ -26,6 +26,7 @@ namespace ProselApp.Models
         public string Description {get; set;}
         public DateTime TimeReceived {get; set;}
         public DateTime? ViewedTime {get; set;}
+        public bool isDeleted {get; set;} 
 
     }
 }

@@ -1,6 +1,6 @@
 @model List<Message>
 @{
-    ViewData["Title"] = "Message Page";
+    ViewData["Title"] = "Lixeira Page";
     Layout="_Layout_3";
     var todas = Model;
     var lidas = new List<Message>();
@@ -19,8 +19,8 @@
             <div class="row ">
                 <div class="order-md-0 col-sm-5 col-md-6  col-lg-6 d-md-flex d-none">
                     <div>
-                        <h1 class="text-white pb-2 fw-bold">Mensagens</h1>
-                        <h4 class="text-white op-8 mb-2 fw-bold">Veja a lista das suas mensagens.</h4>
+                        <h1 class="text-white pb-2 fw-bold">Lixeira</h1>
+                        <h4 class="text-white op-8 mb-2 fw-bold">Veja todas as suas mensagens apagadas.</h4>
                     </div>
                 </div>
                 <div class="order-md-1 col-md-4 d-flex align-items-center justify-content-center">
@@ -33,32 +33,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="order-md-2 btn-group order-md-2 col-md-2 d-flex align-items-center justify-content-md-start justify-content-end mr-md-0 mr-3">
-                    <div class="container d-flex d-sm-flex d-md-none justify-content-end">
-                        <div class="dropdown show">
-                            <select class="form-control form-control-sm" id="nav">
-                                <option value="todas">Todas</option>
-                                <option value="naolidas">Não Lidas</option>
-                                <option value="lidas">Lidas</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 <nav class="justify-content-center d-flex mb-4">
     <ul class="nav nav-line nav-color-default col-12 col-md-10" id="nav-tab">
-        <li class="nav-item order-0 d-none d-md-block">
-            <a class="nav-link active text-white" id="todas" data-toggle="tab" href="#nav-todas">Todas</a>
-        </li>
-        <li class="nav-item order-2 d-none d-md-block">
-            <a class="nav-link text-white" id="lidas" data-toggle="tab" href="#nav-lidas" role="tab">Lidas</a>
-        </li>
-        <li class="nav-item order-1 d-none d-md-block">
-            <a class="nav-link text-white" id="naolidas" data-toggle="tab" href="#nav-naolidas" role="tab">Não Lidas</a>
-        </li>
         <div class="ml-md-auto order-3 d-none align-items-center msgAll">
             <a class="nav-link text-white" href="javascript:void(0)" onclick="apagarvarios()"><i class="fas fa-trash" data-toggle="tooltip" data-placement="bottom" title="Apagar todas mensagens marcadas"></i></a>
             <a class="nav-link text-white" href="javascript:void(0)" onclick="marcarvariascomolida()"><i class="fas fa-envelope-open" data-toggle="tooltip" data-placement="bottom" title="Marcar como lidas todas mensagens marcadas"></i></a>
@@ -85,10 +65,13 @@
                                     </div>
                                 </div>  
                                 <div class="form-group col-md">
-                                   <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-white font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a> 
+                                   <a asp-action="MessagePageTrash" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-white font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a> 
                                 </div>   
                                 <div class="form-group ml-auto col-6  col-md-4 text-right">
                                     <div class="botoes" hidden>
+                                        <a asp-action="RestoreMessage" asp-route-messagecode="@item.Messagecode" data-toggle="tooltip" data-placement="bottom" title="Restaurar mensagens">
+                                            <i class="fas far fa-window-restore mr-4 align-middle text-white" style="font-size:18px;"></i>
+                                        </a>
                                         <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
                                             <i class="fas fa-trash mr-4 align-middle text-white" style="font-size:18px;"></i>
                                         </a>
@@ -117,10 +100,13 @@
                                     </div>
                                 </div>  
                                 <div class="form-group col-md">
-                                    <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-dark font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
+                                    <a asp-action="MessagePageTrash" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-dark font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
                                 </div>   
                                 <div class="form-group ml-auto col-6 col-md-4 text-right">
                                     <div class="botoes" hidden>
+                                        <a asp-action="RestoreMessage" asp-route-messagecode="@item.Messagecode" data-toggle="tooltip" data-placement="bottom" title="Restaurar mensagens">
+                                            <i class="fas far fa-window-restore mr-4 align-middle text-dark" style="font-size:18px;"></i>
+                                        </a>
                                         <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
                                             <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
                                         </a>
@@ -139,98 +125,10 @@
                 }
             }
         }else{
-             <h1 class="mt-5 font-weight-bold text-center">Nenhuma mensagem</h1>
+             <h1 class="mt-5 font-weight-bold text-center">A lixeira está vazia</h1>
         }
         </div> 
     </div> 
-    <!--SOMENTE AS MENSAGENS LIDAS-->
-    <div class="tab-pane fade" id="nav-lidas" role="tabpanel" aria-labelledby="lidas">
-        <div class="container-fluid col-md-11">
-        @if(lidas.Count > 0)
-        {
-            <a class="markmsg text-white font-weight-bold nav-link" onclick="marcar_lidas(this)" href="javascript:void(0)" style="display:inline;">Marcar todas mensagens lidas</a>
-            @foreach (var item in lidas)
-            {
-                <div class="card whiteHover bg-white py-0 my-2">
-                    <div class="card-body py-0">                            
-                        <div class="row"> 
-                            <div class="form-group col-md-3">               
-                                <div class="custom-control custom-checkbox py-0">
-                                    <input type="checkbox" class="lida custom-control-input yellow-text msg" id="@string.Format("l"+item.Messagecode)" value="@item.Messagecode">
-                                    <label class="custom-control-label my-0 py-0 text-dark font-weight-bold" for="@string.Format("l"+item.Messagecode)">@item.Sender</label>
-                                </div>
-                            </div>  
-                            <div class="form-group col-md">
-                                <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-dark font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
-                            </div>    
-                            <div class="form-group ml-auto col-6  col-md-4 text-right">
-                                <div class="botoes" hidden>
-                                    <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
-                                        <i class="fas fa-trash mr-4 align-middle text-dark" style="font-size:18px;"></i>
-                                    </a>
-                                    <a href="javascript:void(0)" onclick="marcarcomolida(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Marcar como lida">
-                                        <i class="fas fa-envelope-open mr-3 align-middle text-dark" style="font-size:18px;"></i>
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <span class="text-dark font-weight-bold align-middle">@item.TimeReceived.ToString("HH:mm dd.MM.yyyy")</span>
-                                    <span class="text-dark font-weight-bold align-middle">Lida às @item.ViewedTime?.ToString("HH:mm dd.MM.yyyy")</span>     
-                                </div>    
-                            </div>                    
-                        </div>                 
-                    </div>
-                </div>
-            }        
-        }else{
-            <h1 class="mt-5 font-weight-bold text-center">Nenhuma mensagem lida</h1>
-        }
-        </div> 
-    </div>
-    <!--SOMENTE AS MENSAGENS NÃO LIDAS-->
-    <div class="tab-pane fade" id="nav-naolidas" role="tabpanel" aria-labelledby="naolidas">
-        <div class="container-fluid col-md-11">
-        @if(naolidas.Count > 0)
-        {  
-            <a class="markmsg text-white font-weight-bold nav-link" onclick="marcar_naolidas(this)" href="javascript:void(0)" style="display:inline;">Marcar todas mensagens não lidas</a>    
-            @foreach (var item in naolidas)
-            {
-                <div class="card blackHover bg-dark py-0 my-2">
-                    <div class="card-body py-0">                            
-                        <div class="row"> 
-                            <a href="#">
-                            <div class="form-group col-md-3">               
-                                <div class="custom-control custom-checkbox py-0">
-                                    <input type="checkbox" class=" naolida custom-control-input msg" id="@string.Format("n"+item.Messagecode)" value="@item.Messagecode">
-                                    <label class="custom-control-label my-0 py-0 text-white font-weight-bold" for="@string.Format("n"+item.Messagecode)">@item.Sender</label>
-                                </div>
-                            </div> 
-                            </a> 
-                            <div class="form-group col-md">
-                                <a asp-action="MessagePage" class="nav-link py-0" asp-route-messagecode="@item.Messagecode"><span class="text-white font-weight-bold align-middle">@item.Description.Substring(0,50)...</span></a>
-                            </div>    
-                            <div class="form-group ml-auto col-6  col-md-4  text-right">
-                                <div class="botoes" hidden>
-                                    <a href="javascript:void(0)" onclick="apagar(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Apagar mensagem">
-                                        <i class="fas fa-trash mr-4 align-middle text-white" style="font-size:18px;"></i>
-                                    </a>
-                                    <a href="javascript:void(0)" onclick="marcarcomolida(@item.Messagecode)" data-toggle="tooltip" data-placement="bottom" title="Marcar como lida">
-                                        <i class="fas fa-envelope-open mr-3 align-middle text-white" style="font-size:18px;"></i>
-                                    </a>
-                                </div>
-                                <div class="info">
-                                    <span class="text-white font-weight-bold align-middle">@item.TimeReceived.ToString("HH:mm dd.MM.yyyy")</span>                           
-                                    <span class="text-white font-weight-bold align-middle">Não lida</span>
-                                </div>
-                            </div>                    
-                        </div>                 
-                    </div>
-                </div>
-            }
-        }else{
-             <h1 class="mt-5 font-weight-bold text-center">Nenhuma mensagem não lida</h1>
-        }
-        </div>
-    </div>
 </div>
 <div class="modal fade" data-backdrop="static" data-keyboard="false" id="Tmodal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
@@ -262,4 +160,4 @@
         </div>
     </div>
 </div>
-<script src="~/assets/js/msg.js"></script>
+<script src="~/assets/js/trash.js"></script>

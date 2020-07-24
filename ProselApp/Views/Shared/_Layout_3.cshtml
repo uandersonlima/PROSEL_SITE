@@ -1,7 +1,7 @@
 @inject ILoginService loginSvc
 @inject IMessageService msgSvc
 @{ 
-    var novasMsgs = msgSvc.GetAllAsync(null).Result.Count(obj => obj.ViewedTime == null);
+    var novasMsgs = msgSvc.GetAllAsync(null).Result.Where(obj => obj.ViewedTime == null).ToList();
     var user = loginSvc.GetUser();
     string usuarioNome = string.Empty;
     if(loginSvc.GetUser() != null)
@@ -12,7 +12,35 @@
         user.AccessType = AccessType.Administrator;
         usuarioNome = "Uanderson Lima";
     }
+    string Format_Time(DateTime msg)
+    {
+        var time = DateTime.Now.Subtract(msg);
+        if(time.TotalSeconds <= 60)
+        {
+            if(time.TotalSeconds == 1)
+                return string.Format(Convert.ToInt32(time.TotalSeconds) + " segundo atrás");
+            else
+                return string.Format(Convert.ToInt32(time.TotalSeconds) + " segundos atrás");            
+        }
+        else if(time.TotalMinutes <= 60)
+        {
+            if(time.TotalMinutes == 1)
+                return string.Format(Convert.ToInt32(time.TotalMinutes) + " minuto atrás");
+            else          
+                return string.Format(Convert.ToInt32(time.TotalMinutes) + " minutos atrás");
+        }
+        else if(time.TotalHours <= 24)
+        {
+            if(time.TotalHours == 1)
+                return string.Format(Convert.ToInt32(time.TotalHours) + " hora atrás");
+            else
+                return string.Format(Convert.ToInt32(time.TotalHours) + " horas atrás");
+        }
+        else if(time.TotalDays == 1)
+         return string.Format(Convert.ToInt32(time.TotalDays) + " dia atrás");
 
+        return string.Format(Convert.ToInt32(time.TotalDays) + " dias atrás");
+    }
 }
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -42,7 +70,7 @@
 	</script>
 </head>
 <body data-background-color="dark">
-    <div class="wrapper sidebar_minimize">
+    <div class="wrapper">
         <div class="main-header">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
@@ -69,74 +97,53 @@
                         <li class="nav-item dropdown hidden-caret mr-5">
                             <a class="nav-link dropdown-toggle" href="#" id="notifications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-bell text-warning" style="font-size:24px"></i>
-                                @if(novasMsgs > 0)
+                                @if(novasMsgs.Count > 0)
                                 {
-                                    <span class="notification text-white font-weight-bold">@novasMsgs</span>
+                                    <span class="notification text-white font-weight-bold">@novasMsgs.Count</span>
                                 }
                             </a>
                             <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="notifications" style="background-color: #fff159;">
                                 <li>
                                     <div class="dropdown-title d-flex justify-content-between align-items-center">
                                         Notificações
-                                        <a href="#" class="small">Marcar todas como lidas</a>
+                                        @if(@novasMsgs.Count > 0)
+                                        {
+                                        <a asp-action="MarkAll" asp-controller="message" class="small">Marcar todas como lidas</a>
+                                        }
                                     </div>
                                 </li>
                                 <li>
                                     <div class="message-notif-scroll scrollbar-outer">
                                         <div class="notif-center">
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="~/assets/temp/atlantis/img/jm_denis.jpg" alt="Img Profile">
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Jimmy Denis</span>
-                                                    <span class="block">
-                                                        Eu vou a consultar amanhã
-                                                    </span>
-                                                    <span class="time">5 minutos atrás</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="~/assets/temp/atlantis/img/chadengle.jpg" alt="Img Profile">
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Chad</span>
-                                                    <span class="block">
-                                                        Nos vemos a tarde!
-                                                    </span>
-                                                    <span class="time">12 minutos atrás</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="~/assets/temp/atlantis/img/mlane.jpg" alt="Img Profile">
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Jhon Doe</span>
-                                                    <span class="block">
-                                                        Vou precisar cancelar...
-                                                    </span>
-                                                    <span class="time">12 minutos atrás</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="~/assets/temp/atlantis/img/talha.jpg" alt="Img Profile">
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="subject">Talha</span>
-                                                    <span class="block">
-                                                        Ok, confirmo.
-                                                    </span>
-                                                    <span class="time">17 minutos atrás</span>
-                                                </div>
-                                            </a>
+                                            @if(novasMsgs.Count > 0)
+                                            {
+                                                @foreach(var msg in novasMsgs)
+                                                {
+                                                    <a asp-action="messagePage" asp-controller="message" asp-route-messagecode="@msg.Messagecode">
+                                                        <div class="notif-img">
+                                                            <div class="avatar" style="width:40px;height:40px;">
+                                                                <span class="avatar-title rounded-circle border border-white bg-dark text-white font-weight-bold h1">@Mask.PrimeirasDuasLetrasNome(msg.Sender).ToUpper()</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notif-content">
+                                                            <span class="subject">@msg.Sender.Substring(0,msg.Sender.Length > 10? 10 : msg.Sender.Length)</span>
+                                                            <span class="block">
+                                                                @msg.Description.Substring(0,20)...
+                                                            </span>
+                                                            <span class="time">@Format_Time(msg.TimeReceived)</span>
+                                                        </div>
+                                                    </a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <h3 class="text-center p-4 font-weight-bold">Nenhuma nova mensagem</h3>
+                                            }                                           
                                         </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i> </a>
+                                    <a class="see-all" asp-action="Index" asp-controller="Message">Ver todas as mensagens<i class="fa fa-angle-right"></i></a>
                                 </li>
                             </ul>
                         </li>
@@ -188,16 +195,28 @@
                     <ul class="nav">
                         <li class="nav-item py-2">
                             <a asp-area="" asp-controller="Message" asp-action="Index">
-                                <i class="fas fa-envelope"></i>
+                                <i class="fa fa-envelope"></i>
                                 <p class="font-weight-bold">Mensagens</p>
                             </a>
                         </li>
+                        <li class="nav-item py-2">
+                            <a asp-area="" asp-controller="Message" asp-action="Trash">
+                                <i class="fa fa-trash"></i>
+                                <p class="font-weight-bold">Lixeira</p>
+                            </a>
+                        </li>                        
                     @if(user.AccessType == AccessType.Administrator)
                         {
                         <li class="nav-item py-2">
                             <a asp-area="" asp-controller="Token" asp-action="Index">
-                                <i class="fas fa-key"></i>
+                                <i class="fa fa-key"></i>
                                 <p class="font-weight-bold">Tokens</p>
+                            </a>
+                        </li>
+                        <li class="nav-item py-2">
+                            <a asp-area="" asp-controller="User" asp-action="Users">
+                                <i class="fa fa-users"></i>
+                                <p class="font-weight-bold"> Usuários</p>
                             </a>
                         </li>
                         }
@@ -271,7 +290,9 @@
     <script src="~/assets/temp/atlantis/js/atlantis.js"></script>
 
     <script src='~/assets/temp/atlantis/js/core/jquery.mask.js'></script>
-    <script src="~/assets/temp/atlantis/js/odontoapp/app/app_scripts.js"></script>
+    <script src="~/assets/js/app_scripts.js"></script>
+    <script src="~/assets/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/assets/js/hub.js"></script>
     <script>
         $(document).ready(function () {
             var url = window.location

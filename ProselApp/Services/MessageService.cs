@@ -47,6 +47,18 @@ namespace ProselApp.Services
             return await msgRepos.GetMultipleMsgsAsync(msgscode);
         }
 
+        public async Task LogicallyDeleteAsync(Message message)
+        {
+            message.isDeleted = true;
+            await UpdateMsgAsync(message);
+        }
+
+        public async Task LogicallyDeleteMultipleAsync(List<Message> msgs)
+        {
+            msgs.ForEach(msg => msg.isDeleted = true);
+            await UpdateMultipleMsgsAsync(msgs);
+        }
+
         public async Task UpdateMsgAsync(Message msg)
         {
             await msgRepos.UpdateMsgAsync(msg);

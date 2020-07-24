@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProselApp.Libraries.Text;
 using ProselApp.Models;
@@ -32,6 +33,18 @@ namespace ProselApp.Services
             }
             return true;
         }
+        public Token NewToken()
+        {
+            var securitytoken = GenKey.GetUniqueKey(16);
+
+            Token token = new Token
+            {
+                SecurityToken = securitytoken,
+                CreationDate = DateTime.Now,
+                TokenExpiration = DateTime.Now.AddMonths(3)
+            };
+            return token;
+        }
         public async Task CreateNewKeyAsync()
         {
             var securitytoken = GenKey.GetUniqueKey(16);
@@ -43,7 +56,6 @@ namespace ProselApp.Services
                 TokenExpiration = DateTime.Now.AddMonths(3)
             };
             await emailSvc.SendTokenToOwnerAsync(token);
-
             await AddAsync(token);
         }
         public async Task DeleteAsync(int id)
@@ -62,6 +74,11 @@ namespace ProselApp.Services
                 return DateTime.Now.Subtract(previousToken.CreationDate);
             }
             return new TimeSpan(23, 59, 59);
+        }
+
+        public async Task<List<Token>> GetAllTokens()
+        {
+            return await tokenRepos.GetAllTokens();
         }
 
         public async Task<Token> GetByHashAsync(string hash)

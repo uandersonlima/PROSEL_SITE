@@ -15,6 +15,7 @@ namespace ProselApp.Repositories.Interfaces
         Task ChangePasswordAsync(User entity);
         List<User> GetUserByEmail(string email);
         Task<User> GetUserByLogin(string email, string senha);
+        Task<List<User>> GetAllUserAsync();
         Task<int> NumberOfUserWithADM();
         int NumberOfUserWithoutADM();
         Task UpdateProfileAsync(User entity);

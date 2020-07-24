@@ -1,0 +1,35 @@
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #212121;
+  background-color: #212121;
+}
+.bg-custom {
+  background: #fff159 !important;
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #212121;
+}
+i.fas {
+  position: relative;
+  z-index: 0;
+}
+i.fas:after {
+  content: "";
+  height: 0px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(255, 255, 255, 0.9);
+  width: 0px;
+  border-radius: 100%;
+  z-index: -1;
+  transition: all 0.3s;
+}
+i.fas:hover::after {
+  width: 40px;
+  height: 40px;
+}
+a.markmsg.text-white:hover {
+  color: #fff159 !important;
+}

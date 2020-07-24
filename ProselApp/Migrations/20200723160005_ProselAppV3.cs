@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProselApp.Migrations
 {
-    public partial class ProselAppV1 : Migration
+    public partial class ProselAppV3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,6 +60,7 @@ namespace ProselApp.Migrations
                     Description = table.Column<string>(nullable: true),
                     TimeReceived = table.Column<DateTime>(nullable: false),
                     ViewedTime = table.Column<DateTime>(nullable: true),
+                    isDeleted = table.Column<bool>(nullable: false),
                     UserCpf = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

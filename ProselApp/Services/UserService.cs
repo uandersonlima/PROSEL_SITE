@@ -131,5 +131,10 @@ namespace ProselApp.Services
                 throw new NotFoundException("User não existe");
             await userRepos.UpdateProfileAsync(entity);
         }
+
+        public async Task<List<User>> GetAllUserAsync()
+        {
+           return await userRepos.GetAllUserAsync();
+        }
     }
 }

@@ -117,5 +117,9 @@ namespace ProselApp.Repositories
                 throw new DbConcurrencyException(e.Message);
             }
         }
+        public async Task<List<User>> GetAllUserAsync()
+        {
+           return await context.User.ToListAsync();
+        }
     }
 }

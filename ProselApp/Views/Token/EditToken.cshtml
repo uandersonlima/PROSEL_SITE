@@ -1,0 +1,33 @@
+@model Token
+<h2 class="font-weight-bold text-dark text-center">
+    Editar Token
+</h2>
+<form asp-action="EditToken" class="p-4">
+    <input asp-for="Id" hidden/>
+    <input asp-for="CreationDate" hidden/>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="form-group">
+                <label asp-for="SecurityToken" class="control-label"></label>
+                <input asp-for="SecurityToken" id="inputToken" class="form-control" readonly/>
+                <span asp-validation-for="SecurityToken" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-1 d-inline-flex align-items-center">
+            <a class="fas fa-undo fa-2x text-dark nav-link p-0" onclick="newToken(this)" href="javascript:void(0)"></a>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label asp-for="TokenExpiration" class="control-label"></label>
+                <input type="date-time" asp-for="TokenExpiration" class="form-control" />
+                <span asp-validation-for="TokenExpiration" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5 float-right">
+        <input type="button" class="btn btn-sm btn-outline-light text-dark font-weight-bold border-0 mr-2" data-dismiss="modal" value="FECHAR"/>
+        <input type="submit" value="SALVAR" class="btn btn-dark btn-sm font-weight-bold"/>
+    </div>
+</form>
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
