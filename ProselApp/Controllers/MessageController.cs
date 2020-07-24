@@ -123,7 +123,10 @@ namespace ProselApp.Controllers
                 TempData["MSG_S"] = MSG.MSG_S010;
                 await msgSvc.AddAsync(message);
                 var userEmails = userSvc.GetAllUserAsync().Result.Where(user => user.Receive_emails).Select(user => user.Email).ToList();
-                await emailSvc.NotifyAllToEmailAsync(message, userEmails);
+                if (userEmails.Count > 0)
+                {
+                    await emailSvc.NotifyAllToEmailAsync(message, userEmails);
+                }
                 // hub.Notify();
                 // msgHubContext.Clients.All.SendAsync("newMsg");
                 return LocalRedirect("/#contact");
