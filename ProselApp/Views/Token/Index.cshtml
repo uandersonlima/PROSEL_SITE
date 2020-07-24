@@ -45,10 +45,11 @@
                         {
                         <span class="text-white font-weight-bold align-middle mr-md-4">Atualizado em @item.UpdateDate?.ToString("ddd, dd.MM.yyyy") às @item.UpdateDate?.ToString("HH:mm")</span>
                         }
-                        <span class="text-white font-weight-bold align-middle">Expira em @item.TokenExpiration.ToString("ddd, dd.MM.yyyy") às @item.TokenExpiration.ToString("HH:mm")</span>
-                        <a class="nav-link text-warning py-0" href="javascript:void(0)">@item.User.Name</a>
+                        <span class="text-white font-weight-bold align-middle mr-md-4">Expira em @item.TokenExpiration.ToString("ddd, dd.MM.yyyy") às @item.TokenExpiration.ToString("HH:mm")</span>
+                        <span class="text-white font-weight-bold align-middle  mr-md-4">CPF:@item.User.Cpf</span>
+                        <span class="text-white font-weight-bold align-middle  mr-md-4 text-capitalize">Usuario: @item.User.Name</span>
                     </div> 
-                    <div class="form-group ml-auto col-6  col-md-3 text-right">
+                    <div class="form-group ml-auto col-6  col-md-1 text-right">
                         <a href="javascript:void(0)" onclick="apagar(@item.Id)" data-toggle="tooltip" data-placement="bottom" title="Apagar token">
                             <i class="fas fa-trash mr-4 align-middle text-white" style="font-size:18px;"></i>
                         </a>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +17,23 @@ namespace ProselApp.Services
             this.smtp = smtp;
             this.conf = conf;
         }
+
+        public async Task NotifyAllToEmailAsync(Message msg, List<string> usersEmails)
+        {
+            string corpoMsg = string.Format("<h1>Prosel - Law&Order</h1>" +
+                               "Nova mensagem de:" + $"<h2>{msg.Sender} - {msg.Email}</h2>");
+
+            MailMessage mensagem = new MailMessage
+            {
+                From = new MailAddress(conf.GetValue<string>("Email:Username")),
+                Subject = "Prosel - Law&Order - Nova mensagem recebida - " + msg.Sender,
+                Body = corpoMsg,
+                IsBodyHtml = true
+            };
+            usersEmails.ForEach(email => mensagem.To.Add(email));
+            await smtp.SendMailAsync(mensagem);
+        }
+
         public async Task SendEmailRecoveryAsync(User user, string code_encrypted)
         {
             string corpoMsg = string.Format("<h1>Prosel - Law&Order</h1>" +

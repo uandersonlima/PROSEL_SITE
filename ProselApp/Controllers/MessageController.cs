@@ -14,11 +14,16 @@ namespace ProselApp.Controllers
     public class MessageController : Controller
     {
         private readonly IMessageService msgSvc;
+        private readonly IEmailService emailSvc;
         private readonly IHubContext<MsgHub> msgHubContext;
-        public MessageController(IMessageService msgSvc, IHubContext<MsgHub> msgHubContext)
+        private readonly IUserService userSvc;
+
+        public MessageController(IMessageService msgSvc, IEmailService emailSvc, IHubContext<MsgHub> msgHubContext, IUserService userSvc)
         {
             this.msgSvc = msgSvc;
+            this.emailSvc = emailSvc;
             this.msgHubContext = msgHubContext;
+            this.userSvc = userSvc;
         }
 
         //[UserAuthorization]
@@ -117,8 +122,10 @@ namespace ProselApp.Controllers
             {
                 TempData["MSG_S"] = MSG.MSG_S010;
                 await msgSvc.AddAsync(message);
-                hub.Notify();
-                msgHubContext.Clients.All.SendAsync("newMsg");
+                var userEmails = userSvc.GetAllUserAsync().Result.Where(user => user.Receive_emails).Select(user => user.Email).ToList();
+                await emailSvc.NotifyAllToEmailAsync(message, userEmails);
+                // hub.Notify();
+                // msgHubContext.Clients.All.SendAsync("newMsg");
                 return LocalRedirect("/#contact");
             }
             return LocalRedirect("/#contact");
