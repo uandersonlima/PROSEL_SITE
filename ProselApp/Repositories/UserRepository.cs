@@ -31,6 +31,7 @@ namespace ProselApp.Repositories
                 context.Update(entity);
                 context.Entry(entity).Property(a => a.Name).IsModified = false;
                 context.Entry(entity).Property(a => a.AccountStatus).IsModified = false;
+                context.Entry(entity).Property(a => a.Receive_emails).IsModified = false;
                 context.Entry(entity).Property(a => a.Telephone).IsModified = false;
                 context.Entry(entity).Property(a => a.Email).IsModified = false;
                 context.Entry(entity).Property(a => a.AccessType).IsModified = false;
@@ -108,8 +109,10 @@ namespace ProselApp.Repositories
             try
             {
                 context.Update(entity);
+                context.Entry(entity).Property(a => a.AccountStatus).IsModified = false;
                 context.Entry(entity).Property(a => a.Password).IsModified = false;
                 context.Entry(entity).Property(a => a.Email).IsModified = false;
+                context.Entry(entity).Property(a => a.AccessType).IsModified = false;
                 await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)

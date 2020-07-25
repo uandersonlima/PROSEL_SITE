@@ -18,18 +18,19 @@ namespace ProselApp.Controllers
             this.tokenSvc = tokenSvc;
         }
 
-        //[UserAuthorization(AccessType.Administrator)]
-        [HttpGet]
+        [HttpGet,UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> Index()
         {
             return View(await tokenSvc.GetAllTokens());
         }
-        [HttpGet]
+
+        [HttpGet, UserAuthorization(AccessType.Administrator)]
         public JsonResult NewToken()
         {
             var token = tokenSvc.NewToken();
             return Json(token);
         }
+
         [HttpGet]
         public async Task<IActionResult> GerarNovoToken()
         {
@@ -45,20 +46,23 @@ namespace ProselApp.Controllers
             }
             return RedirectToAction("novousuario", "user");
         }
-        [HttpGet]
+
+        [HttpGet, UserAuthorization(AccessType.Administrator)]
         public IActionResult AdicionarToken()
         {
             var token = tokenSvc.NewToken();
             return PartialView(token);
         }
-        [HttpPost]
+
+        [HttpPost, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> AdicionarToken(Token token)
         {
             token.CreationDate = DateTime.Now;
             await tokenSvc.AddAsync(token);
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
+
+        [HttpGet, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> EditToken(int? id)
         {
             if (!id.HasValue)
@@ -72,13 +76,15 @@ namespace ProselApp.Controllers
             }
             return PartialView(token);
         }
-        [HttpPost]
+
+        [HttpPost, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> EditToken(int id, Token token)
         {
             await tokenSvc.UpdateAsync(token);
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
+
+        [HttpGet, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> DeleteToken(int? id)
         {
             if (!id.HasValue)
@@ -92,7 +98,8 @@ namespace ProselApp.Controllers
             }
             return PartialView(token);
         }
-        [HttpPost]
+
+        [HttpPost, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> DeleteToken(int id)
         {
             await tokenSvc.DeleteAsync(id);

@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace ProselApp.Services
 {
-    public class MsgHub : Hub
+    public class NotificationService : Hub
     {
         public async Task Notify()
         {
-            await Clients.All.SendAsync("newMsg");
+           await Clients.All.SendAsync("novamsg");
         }
     }
 }

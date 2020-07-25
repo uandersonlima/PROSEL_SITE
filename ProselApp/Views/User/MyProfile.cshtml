@@ -3,6 +3,17 @@
     ViewData["Title"] = "Meu Perfil";
     Layout = "~/Views/Shared/_Layout_3.cshtml";
 }
+<link href="~/assets/css/custom.css" rel="stylesheet"/>
+<style>
+  .custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: yellow;
+  background-color: yellow;
+}
+.custom-switch .custom-control-input:checked~.custom-control-label::after {
+    background-color: #212121;
+}
+</style>
 <div class="page-inner" style="padding-top:12px !important">
     <div class="row">
         <div class="col-md-10 ml-auto mr-auto">
@@ -11,6 +22,7 @@
             </div>
             <div class="card bg-dark shadow-sm col-12" style="border-radius:10px">
                 <div class="card-body">
+                    <div class="col-12 bg-success text-white font-weight-bold">@{await Html.RenderPartialAsync("_Mensagem");}</div>
                     <div class="col form-group">
                         <form asp-action="myprofile" asp-controller="user" method="post">
                             <input type="hidden" asp-for="Cpf" />
@@ -19,6 +31,14 @@
                                     <label asp-for="Name" class="text-white">Nome</label>
                                     <input type="text" asp-for="Name" class="form-control" placeholder="">
                                     <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch py-0">
+                                        <input type="checkbox" class="lida custom-control-input msg" asp-for="Receive_emails">
+                                        <label class="custom-control-label my-0 py-0 text-white font-weight-bold" asp-for="Receive_emails">Receber notificação por email?</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -37,9 +57,10 @@
                                     }
                                 </div>
                             </div>
+
                             <div class="row align-items-center">
                                 <div class="mr-auto">
-                                    <a href="javascript:void(0)" class="nav-link p-0 text-warning font-weight-bold">Alterar senha?</a>
+                                    <a asp-action="UpdatePassword" class="nav-link p-0 text-warning font-weight-bold">Alterar senha?</a>
                                 </div>
                                 <div class="ml-auto">
                                     <input type="submit" class="btn btn-rounded btn-warning text-dark font-weight-bold border-0" value="Salvar" />
@@ -61,19 +82,8 @@
         </div>
     </div>
 </div>
-
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $(function () {
-            $(".CancelarPagamento").click(function () {
-                $("#modal").load("/Pagamentos/CancelarPagamento/", function () {
-                    $("#Tmodal").modal("show");
-                })
-            });
-
-        })
-    </script>
 }
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using ProselApp.Libraries.Filter;
 using ProselApp.Libraries.Lang;
 using ProselApp.Models;
 using ProselApp.Services;
@@ -11,29 +12,30 @@ using ProselApp.Services.Interfaces;
 
 namespace ProselApp.Controllers
 {
+
     public class MessageController : Controller
     {
         private readonly IMessageService msgSvc;
         private readonly IEmailService emailSvc;
-        private readonly IHubContext<MsgHub> msgHubContext;
+        private readonly IHubContext<NotificationService> hubcontext;
         private readonly IUserService userSvc;
 
-        public MessageController(IMessageService msgSvc, IEmailService emailSvc, IHubContext<MsgHub> msgHubContext, IUserService userSvc)
+        public MessageController(IMessageService msgSvc, IEmailService emailSvc, IHubContext<NotificationService> hubcontext, IUserService userSvc)
         {
             this.msgSvc = msgSvc;
             this.emailSvc = emailSvc;
-            this.msgHubContext = msgHubContext;
+            this.hubcontext = hubcontext;
             this.userSvc = userSvc;
         }
 
-        //[UserAuthorization]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> Index(string pesquisa)
         {
             var msgs = await msgSvc.GetAllAsync(pesquisa);
             return View(msgs.Where(msg => !msg.isDeleted).ToList());
         }
 
-        [HttpGet]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> MessagePage(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -48,7 +50,7 @@ namespace ProselApp.Controllers
             }
             return View(msg);
         }
-        [HttpGet]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> Delete(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -62,14 +64,14 @@ namespace ProselApp.Controllers
             }
             return PartialView(msg);
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<IActionResult> Delete(int messagecode)
         {
             var msg = await msgSvc.GetByCodeAsync(messagecode);
             await msgSvc.LogicallyDeleteAsync(msg);
             return RedirectToAction(nameof(Index));
         }
-        [HttpGet]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> MarkAsRead(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -83,7 +85,7 @@ namespace ProselApp.Controllers
             }
             return PartialView(msg);
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<IActionResult> MarkAsRead(int messagecode)
         {
             var msg = await msgSvc.GetByCodeAsync(messagecode);
@@ -91,7 +93,7 @@ namespace ProselApp.Controllers
             await msgSvc.UpdateMsgAsync(msg);
             return RedirectToAction(nameof(Index));
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<JsonResult> DeleteMultiple(List<int> messagecodes)
         {
             var msgs = new List<Message>();
@@ -102,7 +104,7 @@ namespace ProselApp.Controllers
             }
             return Json("/Message");
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<JsonResult> MarkMultiple(List<int> messagecodes)
         {
             var msgs = new List<Message>();
@@ -117,7 +119,6 @@ namespace ProselApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Sender(Message message)
         {
-            var hub = new MsgHub();
             if (ModelState.IsValid)
             {
                 TempData["MSG_S"] = MSG.MSG_S010;
@@ -127,20 +128,19 @@ namespace ProselApp.Controllers
                 {
                     await emailSvc.NotifyAllToEmailAsync(message, userEmails);
                 }
-                // hub.Notify();
-                // msgHubContext.Clients.All.SendAsync("newMsg");
+                await hubcontext.Clients.All.SendAsync("novamsg");
                 return LocalRedirect("/#contact");
             }
             return LocalRedirect("/#contact");
         }
 
-        [HttpGet, Route("Trash")]
+        [HttpGet, Route("Trash"), UserAuthorization]
         public async Task<IActionResult> Trash(string pesquisa)
         {
             var msgs = await msgSvc.GetAllAsync(pesquisa);
             return View(msgs.Where(msg => msg.isDeleted).ToList());
         }
-        [HttpGet]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> RestoreMessage(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -157,7 +157,7 @@ namespace ProselApp.Controllers
 
             return RedirectToAction("Trash", new { });
         }
-        [HttpGet]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> DeleteTrash(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -172,14 +172,14 @@ namespace ProselApp.Controllers
             return PartialView(msg);
         }
 
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<IActionResult> DeleteTrash(int messagecode)
         {
             var msg = await msgSvc.GetByCodeAsync(messagecode);
             await msgSvc.DeleteAsync(msg);
             return RedirectToAction(nameof(Trash));
         }
-        [HttpGet]
+        [HttpGet, UserAuthorization]
         public async Task<IActionResult> MarkAsReadTrash(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -193,7 +193,7 @@ namespace ProselApp.Controllers
             }
             return PartialView(msg);
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<IActionResult> MarkAsReadTrash(int messagecode)
         {
             var msg = await msgSvc.GetByCodeAsync(messagecode);
@@ -201,7 +201,7 @@ namespace ProselApp.Controllers
             await msgSvc.UpdateMsgAsync(msg);
             return RedirectToAction(nameof(Trash));
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<JsonResult> DeleteMultipleTrash(List<int> messagecodes)
         {
             var msgs = new List<Message>();
@@ -212,7 +212,7 @@ namespace ProselApp.Controllers
             }
             return Json("/Trash");
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization]
         public async Task<JsonResult> MarkMultipleTrash(List<int> messagecodes)
         {
             var msgs = new List<Message>();
@@ -225,7 +225,7 @@ namespace ProselApp.Controllers
             return Json("/Trash");
         }
 
-        [HttpGet, Route("Trash/Message")]
+        [HttpGet, Route("Trash/Message"), UserAuthorization]
         public async Task<IActionResult> MessagePageTrash(int? messagecode)
         {
             if (!messagecode.HasValue)
@@ -239,6 +239,14 @@ namespace ProselApp.Controllers
                 await msgSvc.UpdateMsgAsync(msg);
             }
             return View(msg);
+        }
+        [HttpGet, UserAuthorization]
+        public async Task<IActionResult> MarkAll()
+        {
+            var msgs = await msgSvc.GetAllAsync(null);
+            msgs.ForEach(msg => msg.ViewedTime = DateTime.Now);
+            await msgSvc.UpdateMultipleMsgsAsync(msgs);
+            return RedirectToAction(nameof(Index));
         }
 
     }

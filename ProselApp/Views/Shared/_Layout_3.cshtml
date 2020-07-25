@@ -291,9 +291,10 @@
 
     <script src='~/assets/temp/atlantis/js/core/jquery.mask.js'></script>
     <script src="~/assets/js/app_scripts.js"></script>
-    <script src="~/assets/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/assets/js/signalr.js"></script>
     <script src="~/assets/js/hub.js"></script>
     <script>
+        connection.on("novamsg", () => window.location.reload());
         $(document).ready(function () {
             var url = window.location
             $('.sidebar-content .nav').find('.active').removeClass('active')

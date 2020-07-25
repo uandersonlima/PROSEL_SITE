@@ -8,7 +8,8 @@ using ProselApp.Models.Const;
 using ProselApp.Models.AcessCode;
 using System;
 using ProselApp.Models.ViewModel;
-
+using ProselApp.Libraries.Filter;
+using ProselApp.Models.DTO;
 
 namespace ProselApp.Controllers
 {
@@ -57,21 +58,23 @@ namespace ProselApp.Controllers
             }
             else
             {
+                ModelState.Remove("Email");
                 ViewData["MSG_E"] = MSG.MSG_E007;
                 return View();
             }
         }
 
-        [HttpGet, Route("Perfil")]
+        [HttpGet, Route("Perfil"), UserAuthorization]
         public async Task<IActionResult> MyProfile()
         {
             return View(await userSvc.GetByCpfAsync(loginSvc.GetUser().Cpf));
         }
 
-        [HttpPost, Route("Perfil")]
+        [HttpPost, Route("Perfil"), UserAuthorization]
         public async Task<IActionResult> MyProfile(User user)
         {
-            ModelState.Remove("AcessType");
+            ModelState.Remove("AccessType");
+            ModelState.Remove("Cpf");
             ModelState.Remove("AccountStatus");
             ModelState.Remove("Password");
             ModelState.Remove("PasswordConfirmation");
@@ -83,6 +86,42 @@ namespace ProselApp.Controllers
             return RedirectToAction("Index", "message");
         }
 
+        [HttpGet, Route("Perfil/AlterarSenha"), UserAuthorization]
+        public async Task<IActionResult> UpdatePassword()
+        {
+            var Result = await userSvc.GetByCpfAsync(loginSvc.GetUser().Cpf);
+            return View(new Password{Cpf = Result.Cpf});
+        }
+
+        [HttpPost, Route("Perfil/AlterarSenha"), UserAuthorization]
+        public async Task<IActionResult> UpdatePassword(Password password)
+        {
+            if (!ModelState.IsValid)
+            {
+                password.CurrentPassword = string.Empty;
+                password.NewPassword = string.Empty;
+                password.NewPasswordConfirmation = string.Empty;
+                return View(password);
+            }
+            User user = await userSvc.GetByCpfAsync(password.Cpf);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if (user.Password != password.CurrentPassword)
+            {
+                password.CurrentPassword = string.Empty;
+                password.NewPassword = string.Empty;
+                password.NewPasswordConfirmation = string.Empty;
+                ViewData["MSG_E"] = "Senha atual incorreta";
+                return View(password);
+            }
+                       
+            user.Password = password.NewPassword;
+            await userSvc.ChangePasswordAsync(user);
+            TempData["MSG_S"] = MSG.MSG_S005;
+            return RedirectToAction(nameof(MyProfile));
+        }
         public IActionResult NovoUsuario()
         {
             if (loginSvc.GetUser() != null)
@@ -298,12 +337,12 @@ namespace ProselApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
+        [HttpGet, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> Users()
         {
             return View(await userSvc.GetAllUserAsync());
         }
-        [HttpGet]
+        [HttpGet, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> DeleteUser(string cpf)
         {
             if (string.IsNullOrEmpty(cpf))
@@ -317,7 +356,7 @@ namespace ProselApp.Controllers
             }
             return PartialView(user);
         }
-        [HttpPost]
+        [HttpPost, UserAuthorization(AccessType.Administrator)]
         public async Task<IActionResult> Delete(string cpf)
         {
             if (string.IsNullOrEmpty(cpf))
